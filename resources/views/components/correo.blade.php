@@ -3,22 +3,20 @@
 
 
 
+<div class="caja">
+    <div class="formmail">
+        <form action="{{url('/FuncionMail')}}" method="post">
+            @csrf
+            <input type="text" id="destinatario" name="Destinatario" placeholder="Destinatario">
 
+            <input type="text" id="asunto" name="Asunto" placeholder="Asunto">
 
-<form action="{{url('/FuncionMail')}}" method="post">
+            <textarea name="" id="mensaje" name="Mensaje" placeholder="Mensaje"></textarea>
+            
+            <input type="submit" value="ENVIAR CORREO" id="enviar">
+        </form>
+    </div>
+</div>
 
-
-    @csrf
-
-    <input type="text" id="Destinatario" name="Destinatario" placeholder="Destinatario">
-
-    <input type="text" id="Asunto" name="Asunto" placeholder="Asunto">
-
-    <input type="text" id="Mensaje" name="Mensaje" placeholder="Mensaje">
-
-    <input type="submit" value="ENVIAR CORREO">
-
-
-</form>
 
 

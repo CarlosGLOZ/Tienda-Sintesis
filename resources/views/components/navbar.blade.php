@@ -40,9 +40,9 @@
                 
     
                 @endif
-                <div class="nav-container">
+                {{-- <div class="nav-container">
                     <button class="nav-button" id="nav-sign-up-button"><a href="{{ route('auth.signout') }}">Sign Out</a></button>
-                </div>
+                </div> --}}
 
                 
             </div>

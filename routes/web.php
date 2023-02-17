@@ -24,6 +24,7 @@ Route::get('/auth/signup', [AuthController::class, 'signup'])->name('auth.signup
 Route::post('/auth/signup', [AuthController::class, 'register']);
 Route::get('/auth/signin', [AuthController::class, 'signin'])->name('auth.signin');
 Route::post('/auth/signin', [AuthController::class, 'login']);
+Route::get('/auth/signout', [AuthController::class, 'logout'])->name('auth.signout');
 
 // Products
 Route::post('/products/show', [ProductController::class, 'show'])->name('product.show');

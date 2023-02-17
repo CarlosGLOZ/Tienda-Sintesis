@@ -8,16 +8,25 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    /**
+     * Sign Up page
+     */
     public function signup()
     {
         return view('auth.signup');
     }
 
+    /**
+     * Sign In page
+     */
     public function signin()
     {
         return view('auth.signin');
     }
 
+    /**
+     * Register new user
+     */
     public function register(Request $request)
     {
         // Validate user
@@ -41,6 +50,9 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 
+    /**
+     * Log existing user in
+     */
     public function login(Request $request)
     {
         // Validate user
@@ -54,6 +66,17 @@ class AuthController extends Controller
         }
 
         // Redirect
+        return redirect()->route('home');
+    }
+
+    /**
+     * Log user out
+     */
+    public function logout(Request $request)
+    {
+        // Sign user out
+        auth()->logout();
+
         return redirect()->route('home');
     }
 }

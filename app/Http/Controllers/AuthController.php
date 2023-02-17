@@ -81,9 +81,9 @@ class AuthController extends Controller
     }
 
 
-    public function crudProductos(){
-        return view('crudProductos');
+    public function enviarEmail(){
+        return view('enviarEmail');
     }
 
-    
+
 }

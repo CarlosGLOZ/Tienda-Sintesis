@@ -26,9 +26,11 @@ Route::get('/auth/signin', [AuthController::class, 'signin'])->name('auth.signin
 Route::post('/auth/signin', [AuthController::class, 'login']);
 
 //CRUD PRODUCTOS
-Route::get('/crudProductos', [AuthController::class, 'crudProductos'])->name('crudProductos');
+Route::get('/enviarEmail', [AuthController::class, 'enviarEmail'])->name('enviarEmail');
 
 
+
+Route::get('/crearProducto', [AuthController::class, 'crearProducto'])->name('crearProducto');
 
 // Products
 Route::post('/products/show', [ProductController::class, 'show'])->name('product.show');

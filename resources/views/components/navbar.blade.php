@@ -24,6 +24,9 @@
                 <div class="nav-container">
                     <a href="" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-cart-shopping nav-icon"></i></a>
                 </div>
+                <div class="nav-container">
+                    <button class="nav-button" id="nav-sign-up-button"><a href="{{ route('auth.signout') }}">Sign Out</a></button>
+                </div>
             </div>
         @endauth
     </div>

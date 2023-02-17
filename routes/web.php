@@ -29,3 +29,6 @@ Route::get('/auth/signout', [AuthController::class, 'logout'])->name('auth.signo
 // Products
 Route::post('/products/show', [ProductController::class, 'show'])->name('product.show');
 Route::get('/products/{id}', [ProductController::class, 'find'])->name('product.find');
+
+// Shopping cart
+Route::get('/cart', [ProductController::class, 'cart'])->name('cart');

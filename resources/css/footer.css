@@ -1,0 +1,11 @@
+.footer {
+  position: relative;
+  width: 100%;
+  display: flex;
+}
+.footer [class*='_footer'] {
+  width: 33.3%;
+}
+.footer [class*='_footer'] p {
+  margin: 0;
+}

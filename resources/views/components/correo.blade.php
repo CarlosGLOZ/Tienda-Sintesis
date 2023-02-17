@@ -5,12 +5,20 @@
 
 
 
-<form action="" method="post">
+<form action="{{url('/FuncionMail')}}" method="post">
 
-    <input type="text" placeholder="Destinatario">
 
-    <input type="text" placeholder="Asunto">
+    @csrf
 
-    <input type="text" placeholder="Asunto">
+    <input type="text" id="Destinatario" name="Destinatario" placeholder="Destinatario">
+
+    <input type="text" id="Asunto" name="Asunto" placeholder="Asunto">
+
+    <input type="text" id="Mensaje" name="Mensaje" placeholder="Mensaje">
+
+    <input type="submit" value="ENVIAR CORREO">
+
 
 </form>
+
+

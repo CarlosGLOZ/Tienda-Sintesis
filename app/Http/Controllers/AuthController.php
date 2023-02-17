@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\EnviarCorreo;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -85,5 +87,27 @@ class AuthController extends Controller
         return view('enviarEmail');
     }
 
+
+    public function crearProducto(){
+        return view('crearProducto');
+    }
+
+    public function FuncionMail(Request $req){
+        $co=$req->input('Destinatario');
+
+
+        $sub=$req->input('Asunto');
+
+        $msg=$req->input('Mensaje');
+
+
+
+        $datos=array('msg'=>$msg);
+
+        $enviar= new EnviarCorreo($datos);
+        $enviar->sub=$sub;
+        Mail::to($co)->send($enviar);
+        return redirect('/enviarEmail');
+    }
 
 }

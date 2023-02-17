@@ -21,12 +21,24 @@
                 <div class="nav-container">
                     <a href="" class="nav-icon-link" id="nav-icon-user-link"><i class="fa-regular fa-user nav-icon" id="nav-icon-user"></i>{{ auth()->user()->name }}</a>
                 </div>
+
+                @if (auth()->user()->admin==0)
                 <div class="nav-container">
                     <a href="" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-cart-shopping nav-icon"></i></a>
                 </div>
+                @endif
+                @if (auth()->user()->admin==1)
+                <div class="nav-container">
+                    <button class="nav-button" id="nav-sign-up-button"><a href="{{ route('crudProductos') }}"> CRUD PRODUCTOS </a></button>
+                </div>
+                
+    
+                @endif
                 <div class="nav-container">
                     <button class="nav-button" id="nav-sign-up-button"><a href="{{ route('auth.signout') }}">Sign Out</a></button>
                 </div>
+
+                
             </div>
         @endauth
     </div>

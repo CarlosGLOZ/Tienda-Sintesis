@@ -79,4 +79,11 @@ class AuthController extends Controller
 
         return redirect()->route('home');
     }
+
+
+    public function crudProductos(){
+        return view('crudProductos');
+    }
+
+    
 }

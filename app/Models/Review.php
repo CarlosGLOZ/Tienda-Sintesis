@@ -9,6 +9,13 @@ class Review extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'comment',
+        'rating',
+        'product_id',
+        'user_id'
+    ];
+
     /**
      * The product a review is directed towards
      */

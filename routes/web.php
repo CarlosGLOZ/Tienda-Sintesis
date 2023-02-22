@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +30,7 @@ Route::get('/auth/signout', [AuthController::class, 'logout'])->name('auth.signo
 // Products
 Route::post('/products/show', [ProductController::class, 'show'])->name('product.show');
 Route::get('/products/{id}', [ProductController::class, 'find'])->name('product.find');
+
+// Reviews
+Route::post('/reviews/store/{product}', [ReviewController::class, 'store'])->name('review.store');
+Route::delete('/reviews/destroy/{review}', [ReviewController::class, 'destroy'])->name('review.destroy');

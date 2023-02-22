@@ -21,3 +21,56 @@ a {
 a:hover {
     text-decoration-color: black;
 }
+
+.standard-button {
+    width: 159px;
+    height: 48px;
+
+    border: solid;
+    border-width: 1px;
+    padding: 0%;
+
+    background-color: white;
+
+    transition-duration: .3s;
+
+    font-size: 20px;
+    font-weight: 600;
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        width: 100%;
+        height: 100%;
+
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
+
+.standard-button:hover {
+    background-color: black;
+    cursor: pointer;
+    color: whitesmoke;
+    
+    a {
+        color: whitesmoke;
+        text-decoration-color: whitesmoke;
+    }
+}
+
+
+.center-column-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.center-column {
+    height: 100%;
+    width: 33%;
+    min-width: 600px;
+}

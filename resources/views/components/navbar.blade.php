@@ -18,7 +18,7 @@
         @endguest
         @auth
             <div class="icon-wrapper">
-                <div class="nav-container">
+                <div class="nav-container" id="navbar-user-wrapper">
                     <a href="" class="nav-icon-link" id="nav-icon-user-link"><i class="fa-regular fa-user nav-icon" id="nav-icon-user"></i>{{ auth()->user()->name }}</a>
                 </div>
                 <div class="nav-container">

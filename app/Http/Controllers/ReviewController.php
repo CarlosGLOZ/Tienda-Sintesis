@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
@@ -33,9 +34,20 @@ class ReviewController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
-        //
+        $review = $request->except('_token');
+
+        $request->validate([
+            'rating' => 'required|min:0|max:5|numeric',
+            'comment' => 'required'
+        ]);
+
+        $review['user_id'] = auth()->user()->id;
+
+        $product->reviews()->create($review);
+
+        return back();
     }
 
     /**
@@ -80,6 +92,8 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        //
+        $review->delete();
+
+        return back();
     }
 }

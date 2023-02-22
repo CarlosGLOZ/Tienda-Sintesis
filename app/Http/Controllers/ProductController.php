@@ -30,7 +30,9 @@ class ProductController extends Controller
 
     public function find($productId)
     {
-        $product = Product::with('reviews.author')->find($productId);
+        $product = Product::with(['reviews' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }, 'reviews.author'])->find($productId);
 
         return view('product.view', compact(['product']));
     }

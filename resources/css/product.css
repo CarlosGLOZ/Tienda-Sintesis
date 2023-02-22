@@ -119,6 +119,7 @@
 }
 .review-comment {
   padding-right: 20px;
+  overflow-wrap: break-word;
 }
 #review-form-comment {
   padding: 10px;

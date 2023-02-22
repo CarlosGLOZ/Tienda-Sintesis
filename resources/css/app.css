@@ -14,8 +14,7 @@ body {
 }
 a {
   color: black;
-  text-decoration: underline;
-  text-decoration-color: transparent;
+  text-decoration: none;
   transition-duration: 0.3s;
 }
 a:hover {

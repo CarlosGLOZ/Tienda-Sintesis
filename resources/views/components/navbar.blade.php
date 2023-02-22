@@ -3,7 +3,7 @@
 <div id="navbar">
     <div id="navbar-left">
         <div class="nav-container">
-            <a href="{{ route('home') }}" class="logo-text">Loogo</a>
+            <a href="{{ route('home') }}" class="logo-text"><img src="{{ asset('../resources/images/logos/logo-1.png') }}" alt=""></a>
         </div>
     </div>
     <div id="navbar-middle"></div>

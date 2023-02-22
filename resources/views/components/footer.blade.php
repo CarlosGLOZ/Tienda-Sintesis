@@ -8,7 +8,7 @@
 <div class="footer">
     <div class="f_footer">
         <div class="img-footer">
-            <img src="" alt="">
+            <img src="{{ asset('../resources/images/logos/logo-2.png') }}" alt="">
         </div>
         <div class="rs-footer">
             <i class="fa-brands fa-facebook"></i>
@@ -17,17 +17,19 @@
             <i class="fa-brands fa-linkedin"></i>
         </div>
     </div>
+    <hr>
     <div class="s_footer">
         <p>Obtener ayuda</p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
+        <p>Añadir tu producto</p>
+        <p>Registrate para hacer entregas</p>
+        <p>Crear una cuenta de empresa</p>
+        <p>Promociones</p>
     </div>
+    <hr>
     <div class="t_footer">
-        <p>Hola</p>
-        <p></p>
-        <p></p>
-        <p></p>
+        <p>Tiendas cercanas</p>
+        <p>Para recoger cerca de mí</p>
+        <p>Acerca de CAHM</p>
+        <p>Españoles</p>
     </div>
 </div>

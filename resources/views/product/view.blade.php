@@ -21,6 +21,12 @@
                     <div id="product-buttons">
                         @auth
                             <button class="standard-button add-to-cart-button"><a href="">Add to cart</a></button>
+
+                            {{-- Edit & delete for admins --}}
+                            @can('change', $product)
+                                <button class="standard-button add-to-cart-button"><a href="">Edit</a></button>
+                                <button class="standard-button-dark add-to-cart-button"><a href="">Delete</a></button>
+                            @endcan
                         @endauth
                         @guest
                             <button class="standard-button add-to-cart-button"><a href="{{ route('auth.signin') }}">Add to cart</a></button>
@@ -74,7 +80,7 @@
                                 <form action="{{ route('review.destroy', $review) }}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="standard-button">Delete</button>
+                                    <button type="submit" class="standard-button-dark">Delete</button>
                                 </form>
                             @endcan
                         </div>

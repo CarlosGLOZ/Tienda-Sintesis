@@ -36,6 +36,8 @@ a:hover {
 
     font-size: 20px;
     font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: white;
 
     a {
         display: flex;
@@ -47,6 +49,8 @@ a:hover {
 
         font-size: 20px;
         font-weight: 600;
+        text-decoration: underline;
+        text-decoration-color: white;
     }
 }
 
@@ -57,7 +61,51 @@ a:hover {
     
     a {
         color: whitesmoke;
-        text-decoration-color: whitesmoke;
+    }
+}
+
+.standard-button-dark {
+    width: 159px;
+    height: 48px;
+
+    border: solid;
+    border-width: 1px;
+    padding: 0%;
+
+    background-color: black;
+    color: white;
+
+    transition-duration: .3s;
+
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: black;
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        width: 100%;
+        height: 100%;
+
+        font-size: 20px;
+        font-weight: 600;
+        color: white;
+        text-decoration: underline;
+        text-decoration-color: black;
+    }
+}
+
+.standard-button-dark:hover {
+    background-color: white;
+    cursor: pointer;
+    color: black;
+    text-decoration-color: black;
+    
+    a {
+        color: black;
     }
 }
 

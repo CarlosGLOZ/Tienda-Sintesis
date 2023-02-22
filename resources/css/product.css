@@ -47,6 +47,10 @@
   margin: 0;
   font-family: 'Poppins', sans-serif;
 }
+#product-buttons {
+  display: grid;
+  gap: 20px;
+}
 #product-rating {
   color: #717171;
 }

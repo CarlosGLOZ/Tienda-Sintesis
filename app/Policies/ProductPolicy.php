@@ -25,4 +25,16 @@ class ProductPolicy
 
         return false;
     }
+
+    /**
+     * Edit or delete a product
+     */
+    public function change(User $user, Product $product)
+    {
+        if ($user->admin == 1) {
+            return true;
+        }
+        
+        return false;
+    }
 }

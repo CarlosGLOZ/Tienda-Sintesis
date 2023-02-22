@@ -35,7 +35,7 @@
 
                 <div class="nav-container">
                  
-                    <a href="{{ route('crearProducto') }}" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-folder-plus"></i></a>
+                    <a href="{{ route('crudProductos') }}" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-folder-plus"></i></a>
                 </div>
                 
     

@@ -30,12 +30,12 @@
                 @if (auth()->user()->admin==1)
                 <div class="nav-container">
                  
-                    <a href="{{ route('home') }}" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-arrow-left"></i></a>
+                    <a href="{{ route('enviarEmail') }}" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-envelope"></i></a>
                 </div>
 
                 <div class="nav-container">
                  
-                    <a href="{{ route('crudProductos') }}" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-folder-plus"></i></a>
+                    <a href="{{ route('home') }}" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-arrow-left"></i></a>
                 </div>
                 
     

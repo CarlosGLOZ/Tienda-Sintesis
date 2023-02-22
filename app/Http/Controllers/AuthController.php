@@ -88,8 +88,8 @@ class AuthController extends Controller
     }
 
 
-    public function crearProducto(){
-        return view('crearProducto');
+    public function crudProductos(){
+        return view('crudProductos');
     }
 
     public function FuncionMail(Request $req){

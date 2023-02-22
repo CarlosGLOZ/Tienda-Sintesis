@@ -29,8 +29,12 @@ Route::post('/auth/signin', [AuthController::class, 'login']);
 Route::get('/enviarEmail', [AuthController::class, 'enviarEmail'])->name('enviarEmail');
 Route::post('/FuncionMail',[AuthController::class,'FuncionMail'])->name('FuncionMail');
 
-
-Route::get('/crearProducto', [AuthController::class, 'crearProducto'])->name('crearProducto');
+//CRUD PRODCUTOS
+Route::get('/crudProductos', [AuthController::class, 'crudProductos'])->name('crudProductos');
+Route::post('/listar_crud_pro',[ProductController::class, 'listar_crud_pro'])->name('listar_crud_pro');
+Route::delete('/eliminarProducto',[ProductController::class, 'eliminarProducto'])->name('eliminarProducto');
+Route::post('/editarProducto',[ProductController::class, 'editarProducto'])->name('editarProducto');
+Route::post('/crearProducto',[ProductController::class, 'crearProducto'])->name('crearProducto');
 
 // Products
 Route::post('/products/show', [ProductController::class, 'show'])->name('product.show');

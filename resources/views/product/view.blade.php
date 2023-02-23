@@ -20,7 +20,18 @@
                     </div>
                     <div id="product-buttons">
                         @auth
-                            <button class="standard-button add-to-cart-button"><a href="">Add to cart</a></button>
+                            @can('cart', $product)
+                            <form action="{{ route('cart.store', $product) }}" method="post">
+                                @csrf
+                                <button type="submit" class="standard-button add-to-cart-button">Add to cart</button>
+                            </form>
+                            @else
+                                <form action="{{ route('cart.destroy', $product) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="standard-button-dark add-to-cart-button">Uncart</button>
+                                </form>
+                            @endcan
 
                             {{-- Edit & delete for admins --}}
                             @can('change', $product)

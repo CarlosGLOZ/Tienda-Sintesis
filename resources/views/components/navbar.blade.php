@@ -19,10 +19,10 @@
         @auth
             <div class="icon-wrapper">
                 <div class="nav-container" id="navbar-user-wrapper">
-                    <a href="" class="nav-icon-link" id="nav-icon-user-link"><i class="fa-regular fa-user nav-icon" id="nav-icon-user"></i>{{ auth()->user()->name }}</a>
+                    <a href="{{ route('cart.show') }}" class="nav-icon-link" id="nav-icon-user-link"><i class="fa-regular fa-user nav-icon" id="nav-icon-user"></i>{{ auth()->user()->name }}</a>
                 </div>
                 <div class="nav-container">
-                    <a href="" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-cart-shopping nav-icon"></i></a>
+                    <a href="{{ route('cart.show') }}" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-cart-shopping nav-icon"></i></a>
                 </div>
                 <div class="nav-container">
                     <button class="nav-button" id="nav-sign-up-button"><a href="{{ route('auth.signout') }}">Sign Out</a></button>

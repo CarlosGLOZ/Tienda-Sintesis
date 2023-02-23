@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\ShoppingCart;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -34,7 +35,19 @@ class ProductPolicy
         if ($user->admin == 1) {
             return true;
         }
-        
+
+        return false;
+    }
+
+
+    public function cart(User $user, Product $product)
+    {
+        $isCartedBy = ShoppingCart::where(['product_id' => $product->id, 'user_id' => $user->id])->count();
+
+        if ($isCartedBy == 0) {
+            return true;
+        }
+
         return false;
     }
 }

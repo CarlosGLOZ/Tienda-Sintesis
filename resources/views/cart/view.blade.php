@@ -34,14 +34,21 @@
                 </div>
             @endforeach
         </div>
-        <div id="cart-menu">
-            <div>
-                <p id="total-price-title">Total: </p>
-                <p id="total-price">{{ number_format($items->sum('product.price'),2) }}€</p>
+        @if ($items->count() > 0)
+            <div id="cart-menu">
+                <div>
+                    <p id="total-price-title">Total: </p>
+                    <p id="total-price">{{ number_format($items->sum('product.price'),2) }}€</p>
+                </div>
+                <div>
+                    <button class="standard-button">Purchase</button>
+                </div>
             </div>
-            <div>
-                <button class="standard-button">Purchase</button>
+        @else
+            <div id="empty-message">
+                <p>Nothing in shopping cart</p>
+                <button class="standard-button-dark"><a href="{{ route('home') }}">Shop</a></button>
             </div>
-        </div>
+        @endif
     </div>
 @endsection

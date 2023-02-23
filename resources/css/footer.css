@@ -48,6 +48,11 @@
   padding: 10px;
   background-color: #eaeaea;
   border-radius: 20px;
+  cursor: pointer;
+  transition: 0.4s ease;
+}
+.footer .f_footer .rs-footer i:hover {
+  transform: scale(1.1);
 }
 .footer .f_footer .img-footer img {
   width: 100px;

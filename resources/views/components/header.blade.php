@@ -7,5 +7,6 @@
 <div class="header">
     <div class="header-content-wrapper">
         <p id="header-title">{{ $title }}</p>
+        <a href="#tag-list"><button>Encuentra nuestros productos</button></a>
     </div>
 </div>

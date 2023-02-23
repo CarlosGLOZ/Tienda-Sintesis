@@ -1,7 +1,5 @@
 #navbar {
-    height: 100px;
-
-    width: calc(100% - 60px);
+    max-width: 100%;
 
     position: sticky;
     top: 0%;
@@ -15,22 +13,10 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding-left: 30px;
-    padding-right: 30px;
+    align-items: center;
+    padding: 20px;
 
-    // Divs within navbar will be either 'navbar-left', 'navbar-middle' or 'navbar-right'
-    div {
-        display: flex;
-        flex-direction: row;
-    }
-}
-
-.navbar-button-container {
-    width: calc(calc(var(--width-nav-button) * 2) + 20px);
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-}
+}   
 
 .nav-container {
     height: 100%;
@@ -109,14 +95,34 @@
     }
 }
 
+#navbar-right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 40px;
+    gap: 40px;
+    @media(max-width: 690px){
+        display: none;
+    }
+}
+
+#navbar-side{
+    i{
+        font-size: 20px; 
+        cursor:pointer; 
+        color: black; 
+        padding: 10px; 
+        background: #eaeaea; 
+        border-radius: 50%;
+    }
+}
+
 #nav-icon-user {
     border: solid 2px black;
     border-radius: 100px;
     border-color: transparent;
-
     transition: border-color 400ms;
-
-    padding: 10px;
     aspect-ratio: 1;
 }
 
@@ -124,7 +130,8 @@
     display: flex;
     gap: 5px;
     align-items: center;
-    font-size: 20px;
+    font-size: 15px;
+    padding: 15px 40px;
 }
 
 #nav-icon-user-link:hover {
@@ -132,11 +139,6 @@
         border-color: rgba(0,0,0, 0.31);
     }
     #text{ text-decoration: none; }
-}
-
-#navbar-right {
-    justify-content: end;
-    padding-right: 50px;
 }
 
 #nav-icon-cart-link {
@@ -155,3 +157,36 @@
     }
 }
 
+// NAVBAR - SIDE //
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 20;
+    top: 0;
+    right: -250px;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidenav a {
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  .sidenav .closebtn {
+    position: absolute;
+    top: 12px;
+    left: 38px;
+    font-size: 36px;
+    margin-right: 50px;
+  }

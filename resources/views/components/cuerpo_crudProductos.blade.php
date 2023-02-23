@@ -1,5 +1,7 @@
+<div class="titulo">
+    <h1>PRODUCTOS</h1>
+</div>
 <div class="cajaproductos">
-
     <form action="" method="post" id="frm" enctype="multipart/form-data" class="formularioproductos">
 
         <input type="hidden" name="id" id="id" value="">

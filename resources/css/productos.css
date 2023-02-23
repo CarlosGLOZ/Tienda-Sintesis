@@ -34,7 +34,7 @@ body {
 .cajaproductos {
     display: flex;
     flex-direction: row-reverse;
-    margin: 100px 20px;
+    margin: 45px 20px;
     justify-content: center;
 }
 
@@ -113,6 +113,18 @@ table {
     text-align: center;
 }
 
+.titulo {
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0px 0px 0px;
+}
+
+.titulo h1 {
+    margin: 0px;
+}
+
 table tr {
     display: flex;
     align-items: center;
@@ -187,6 +199,7 @@ table tr {
         object-fit: cover;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
+
     .btn-success {
         padding: 9px;
         font-size: 10px;
@@ -194,6 +207,7 @@ table tr {
         background-color: white;
         border-radius: 5px;
     }
+
     .btn-danger {
         padding: 9px;
         font-size: 10px;
@@ -201,7 +215,12 @@ table tr {
         background-color: white;
         border-radius: 5px;
     }
+
+    .titulo h1 {
+        font-size: 15px;
+    }
 }
+
 @media (max-width: 400px) {
     .btn-danger {
         padding: 5px;
@@ -210,6 +229,7 @@ table tr {
         background-color: white;
         border-radius: 5px;
     }
+
     .btn-success {
         padding: 5px;
         font-size: 7px;
@@ -217,7 +237,12 @@ table tr {
         background-color: white;
         border-radius: 5px;
     }
+
     thead tr {
         font-size: 8px;
+    }
+
+    .titulo h1 {
+        font-size: 20px;
     }
 }

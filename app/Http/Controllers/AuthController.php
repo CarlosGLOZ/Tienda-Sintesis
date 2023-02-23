@@ -95,6 +95,7 @@ class AuthController extends Controller
     public function FuncionMail(Request $req){
         $co=$req->input('Destinatario');
 
+        
 
         $sub=$req->input('Asunto');
 

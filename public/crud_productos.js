@@ -34,14 +34,14 @@ function listar() {
             } else {
                 productos.forEach(element => {
 
-                        box += `<tr >
+                        box += `<tr class="linea">
                     <td>${element.id} </td>
                     <td>${element.name} </td>
                     <td>${element.description} </td>
                     <td>${element.price} €</td>
                     
                    
-                    <td> <img style="width: 100px;height:100px" class='img-restaurantes' src="storage/productos/${element.id}.jpg?x=${Math.random()}"> </td>
+                    <td> <img class='imagenmueble' src="storage/productos/${element.id}.jpg?x=${Math.random()}"> </td>
                   
                     <td>
                         <button type='button' class='btn btn-success' onclick=Editar('${element.id}')>Editar</button>
@@ -80,8 +80,8 @@ function Eliminar(id) {
         title: '¿Quiere eliminar este producto?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3894a3',
-        cancelButtonColor: '#2f414F',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
         confirmButtonText: 'Si',
         background: 'black',
         color: 'white',

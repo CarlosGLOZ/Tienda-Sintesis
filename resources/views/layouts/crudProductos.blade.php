@@ -12,7 +12,7 @@
         <!-- CSS -->
         <link rel="stylesheet" href="{{ asset('../resources/css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('../resources/css/navbar.css') }}">
-    
+        <link rel="stylesheet" href="{{ asset('../resources/css/productos.css') }}">
         @stack('head')
     
         <!-- FontAwesome -->

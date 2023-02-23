@@ -75,6 +75,7 @@ form {
     border: none;
     border: 1px solid rgb(63, 63, 63);;
 }
+
 #enviar {
     width: 80%;
     padding: 10px;
@@ -83,6 +84,11 @@ form {
     margin-bottom: 10px;
     border: none;
 }
+.enviar:hover{
+    background-color: #FFF7E3;
+    transition: 1s;
+}
+
 #mensaje {
     width: 400px;
     height: 15vh;
@@ -90,4 +96,16 @@ form {
     margin: 0 0 10px 0;
     border-radius: 5px;
     padding: 10px;
+    max-width: 400px;
+    max-height: 30vh;
 }
+
+@media (max-width: 530px) {
+    .formmail input {
+        width: 300px;
+    }
+    #mensaje {
+        width: 300px;
+    }
+}
+  

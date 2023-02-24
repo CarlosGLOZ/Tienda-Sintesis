@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\EnviarCorreo;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -79,4 +81,91 @@ class AuthController extends Controller
 
         return redirect()->route('home');
     }
+
+
+    public function enviarEmail(){
+        return view('enviarEmail');
+    }
+
+
+    public function crudProductos(){
+        return view('crudProductos');
+    }
+
+    public function FuncionMail(Request $req){
+        $co=$req->input('Destinatario');
+
+//CORREO PARA TODOS LOS USUARIOS
+if ($co=="Todos los usuarios") {
+  $correos = User::select('email')->get();
+
+  $sub=$req->input('Asunto');
+
+  $msg=$req->input('Mensaje');
+
+
+
+  $datos=array('msg'=>$msg);
+
+
+  foreach ($correos as $correo) {
+      $enviar= new EnviarCorreo($datos);
+      $enviar->sub=$sub;
+      Mail::to($correo)->send($enviar);
+  }
+
+  return redirect('/enviarEmail');
+  
+} else {
+    //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
+    $correos=explode(',', $co);   
+
+    $sub=$req->input('Asunto');
+
+    $msg=$req->input('Mensaje');
+
+
+
+    $datos=array('msg'=>$msg);
+
+ 
+    foreach ($correos as $correo) {
+        $enviar= new EnviarCorreo($datos);
+        $enviar->sub=$sub;
+        Mail::to($correo)->send($enviar);
+    }
+
+
+    
+        // $enviar= new EnviarCorreo($datos);
+        // $enviar->sub=$sub;
+        // Mail::to($co)->send($enviar);
+    
+  
+    return redirect('/enviarEmail');
 }
+
+
+    }
+
+
+
+public function listarCorreos(Request $req){
+
+    $buscador=$req->except('_token');
+    /* $buscador='Mc'; */
+    /* echo $buscador; */
+    /* echo $buscador['buscar']; */
+    /* dd($request); */
+    $consulta=User::where('email', 'like', '%'.$buscador['buscar'].'%')->get();
+    /* $count = $consulta->count(); */
+    return response()->json($consulta);
+
+
+
+}
+
+
+
+}
+

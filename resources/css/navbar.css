@@ -128,8 +128,9 @@
   position: fixed;
   z-index: 20;
   top: 0;
-  right: -250px;
-  background-color: #111;
+  right: -255px;
+  background-color: #FFFBF3;
+  border-left: 3px solid rgba(0, 0, 0, 0.31);
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -140,6 +141,33 @@
   color: #818181;
   display: block;
   transition: 0.3s;
+}
+.sidenav a:hover i {
+  border-color: transparent!important;
+}
+.sidenav a:nth-child(2) {
+  color: #d4696c;
+}
+.sidenav a:nth-child(2):hover {
+  color: #d4696c8b;
+}
+.sidenav a:nth-child(3) {
+  color: #395173;
+}
+.sidenav a:nth-child(3):hover {
+  color: #3951738b;
+}
+.sidenav a:nth-child(4) {
+  color: #57652a;
+}
+.sidenav a:nth-child(4):hover {
+  color: #57652a8b;
+}
+.sidenav a:nth-child(5) {
+  color: #907bbb;
+}
+.sidenav a:nth-child(5):hover {
+  color: #907bbb8b;
 }
 .sidenav a:hover {
   color: #f1f1f1;
@@ -158,7 +186,7 @@
   width: 100%;
   height: 100%;
   z-index: -10;
-  background-color: black;
+  background-color: #FFFBF3;
   opacity: 0;
   transition: 0.4s ease;
 }

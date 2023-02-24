@@ -8,6 +8,24 @@
 * {
   font-family: 'Montserrat', sans-serif;
 }
+/* SCROLLBAR */
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #907bbbdc;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #907bbbc5;
+}
+::-webkit-scrollbar-thumb:active {
+  background-color: #907bbbd2;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 body {
   background-color: #FFFBF3;
   margin: 0%;

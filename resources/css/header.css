@@ -8,6 +8,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: center;
+  background-attachment: fixed;
   user-select: none;
 }
 .header-content-wrapper {

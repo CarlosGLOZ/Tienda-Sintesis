@@ -41,7 +41,6 @@ Route::post('/crearProducto',[ProductController::class, 'crearProducto'])->name(
 
 // Products
 Route::get('/products/{id}', [ProductController::class, 'find'])->name('product.find');
-<<<<<<< HEAD
 Route::post('/products/show', [ProductController::class, 'show'])->name('product.show');
 
 // Reviews
@@ -52,6 +51,3 @@ Route::delete('/reviews/destroy/{review}', [ReviewController::class, 'destroy'])
 Route::get('/cart', [ShoppingCartController::class, 'show'])->name('cart.show');
 Route::post('/cart/store/{product}', [ShoppingCartController::class, 'store'])->name('cart.store');
 Route::delete('/cart/destroy/{product}', [ShoppingCartController::class, 'destroy'])->name('cart.destroy');
-=======
-
->>>>>>> 184392a6dac01e273540b458a65f8feda5ed512a

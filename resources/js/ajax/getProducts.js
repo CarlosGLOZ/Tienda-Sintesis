@@ -1,7 +1,6 @@
 function getProducts(name = '', order_column = 'name', order_direction = 'ASC') {
 
     // Append filters to the end of path 
-    // let filtersPathVariables = filtersPath + "?name_filter=" + name + "&order_column_filter=" + order_column + "&order_direction_filter=" + order_direction;
     let formData = new FormData();
     formData.append('_token', token.content);
     formData.append('name_filter', name);
@@ -14,7 +13,6 @@ function getProducts(name = '', order_column = 'name', order_direction = 'ASC') 
     ajax.open('POST', filtersPath);
 
     ajax.onload = (e) => {
-        // console.log({ 'status': ajax.status, 'response': ajax.response });
         if (ajax.status === 200) {
             let products = JSON.parse(ajax.response).data;
 

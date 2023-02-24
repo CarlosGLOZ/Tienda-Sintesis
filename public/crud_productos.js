@@ -1,6 +1,7 @@
 var csrf_token = document.getElementById('token').content;
-
-
+const tableFiltersForm = document.getElementById('table-filters-form');
+const tableDestroyForm = document.getElementById('table-destroy-form');
+const productForm = document.getElementById('product-form');
 
 reiniciar.addEventListener("click", () => {
     var form = document.getElementById('frm');
@@ -8,10 +9,7 @@ reiniciar.addEventListener("click", () => {
 })
 
 
-listar('')
-
-
-
+listar()
 
 
 function listar() {
@@ -23,7 +21,7 @@ function listar() {
     formdata.append('_token', csrf_token);
 
     const ajax = new XMLHttpRequest();
-    ajax.open('POST', 'listar_crud_pro');
+    ajax.open('POST', tableFiltersForm.action);
     ajax.onload = function() {
         if (ajax.status == 200) {
             console.log('Todo ha ido bien')
@@ -41,7 +39,7 @@ function listar() {
                     <td>${element.price} €</td>
                     
                    
-                    <td> <img style="width: 100px;height:100px" class='img-restaurantes' src="storage/productos/${element.id}.jpg?x=${Math.random()}"> </td>
+                    <td> <img style="width: 100px;height:100px" class='img-restaurantes' src="../storage/images/products/prod_${element.id}.png?x=${Math.random()}"> </td>
                   
                     <td>
                         <button type='button' class='btn btn-success' onclick=Editar('${element.id}')>Editar</button>
@@ -100,15 +98,16 @@ function Eliminar(id) {
             var ajax = new XMLHttpRequest();
             // Lo envia al metodo eliminar
 
-            ajax.open("Post", "eliminarProducto");
+            ajax.open("Post", tableDestroyForm.action);
             ajax.onload = function() {
                 if (ajax.status === 200) {
-                    let respuesta = JSON.parse(ajax.responseText);
+                    console.log(ajax.response);
+                    let respuesta = JSON.parse(ajax.response);
                     // Revisa si lo ha hecho en la base de datos
                     if (respuesta == "OK") {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Eliminado',
+                            title: 'Product deleted',
                             showConfirmButton: false,
                             timer: 1500
                         });
@@ -159,120 +158,125 @@ function Editar(id) {
 
 registrar.addEventListener("click", () => {
 
-
-
-
-    var form = document.getElementById('frm');
-
-    var formdata = new FormData(form);
-    formdata.append('_token', csrf_token);
-
+    var formdata = new FormData(productForm);
 
     var ajax = new XMLHttpRequest();
 
-    ajax.open('POST', 'crearProducto');
+    ajax.open('POST', productForm.action);
     ajax.onload = function() {
-
-
         if (ajax.status == 200) {
+            AJAXResponse = JSON.parse(ajax.responseText);
 
-            respuesta = JSON.parse(ajax.responseText);
-            /* alert(respuesta); */
+            console.log(AJAXResponse);
 
-            if (respuesta == "OK") {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Producto creado correctamente',
-                    background: 'black',
-                    color: 'white',
-                    showConfirmButton: false,
-                    timerProgressBar: true,
-                    timer: 3500
-                });
+            Swal.fire({
+                icon: AJAXResponse.icon,
+                title: AJAXResponse.message,
+                background: 'white',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3500
+            });
+
+            if (AJAXResponse.status == 'OK') {
                 document.getElementById('registrar').value = "Registrar";
-
-                listar('')
-                form.reset();
-
-            } else if (respuesta == "Repetido") {
-
-                listar('')
-                form.reset();
-                document.getElementById('registrar').value = "Registrar";
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Producto no creado, ya existe',
-                    showConfirmButton: false,
-                    background: 'black',
-                    color: 'white',
-                    timerProgressBar: true,
-
-                    timer: 3500
-                });
-            } else if (respuesta == "vacio") {
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Campos no rellenados',
-                    showConfirmButton: false,
-                    background: 'black',
-                    color: 'white',
-                    timerProgressBar: true,
-                    /*  */
-                    timer: 3500
-                });
-                document.getElementById('registrar').value = "Registrar";
-                form.reset();
-
-                listar('')
-            } else if (respuesta == "mal_formato") {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Producto no insertado error en el formato',
-                    showConfirmButton: false,
-                    background: 'black',
-                    color: 'white',
-                    timerProgressBar: true,
-
-                    timer: 3500
-                });
-                document.getElementById('registrar').value = "Registrar";
-                form.reset();
-                listar('')
-            } else if (respuesta == "actualizar") {
-                // alert(respuesta);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Producto modificado',
-                    background: 'black',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                registrar.value = "Registrar";
-                id.value = "";
-                listar('')
-                form.reset();
-            } else if (respuesta == "igual") {
-                // alert(respuesta);
-                Swal.fire({
-                    icon: 'success',
-                    background: 'black',
-                    title: 'No ha habido ningún cambio',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                registrar.value = "Registrar";
-                id.value = "";
-
-                listar('')
-                form.reset();
+                productForm.reset();
             }
+
+            listar()
+
+            // if (respuesta == "OK") {
+            //     Swal.fire({
+            //         icon: 'success',
+            //         title: 'Producto creado correctamente',
+            //         background: 'black',
+            //         color: 'white',
+            //         showConfirmButton: false,
+            //         timerProgressBar: true,
+            //         timer: 3500
+            //     });
+            //     document.getElementById('registrar').value = "Registrar";
+
+            //     listar('')
+            //     form.reset();
+
+            // } else if (respuesta == "Repetido") {
+
+            //     listar('')
+            //     form.reset();
+            //     document.getElementById('registrar').value = "Registrar";
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Producto no creado, ya existe',
+            //         showConfirmButton: false,
+            //         background: 'black',
+            //         color: 'white',
+            //         timerProgressBar: true,
+
+            //         timer: 3500
+            //     });
+            // } else if (respuesta == "vacio") {
+
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Campos no rellenados',
+            //         showConfirmButton: false,
+            //         background: 'black',
+            //         color: 'white',
+            //         timerProgressBar: true,
+            //         /*  */
+            //         timer: 3500
+            //     });
+            //     document.getElementById('registrar').value = "Registrar";
+            //     form.reset();
+
+            //     listar('')
+            // } else if (respuesta == "mal_formato") {
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Producto no insertado error en el formato',
+            //         showConfirmButton: false,
+            //         background: 'black',
+            //         color: 'white',
+            //         timerProgressBar: true,
+
+            //         timer: 3500
+            //     });
+            //     document.getElementById('registrar').value = "Registrar";
+            //     form.reset();
+            //     listar('')
+            // } else if (respuesta == "actualizar") {
+            //     // alert(respuesta);
+            //     Swal.fire({
+            //         icon: 'success',
+            //         title: 'Producto modificado',
+            //         background: 'black',
+            //         showConfirmButton: false,
+            //         timer: 1500
+            //     });
+            //     registrar.value = "Registrar";
+            //     id.value = "";
+            //     listar('')
+            //     form.reset();
+            // } else if (respuesta == "igual") {
+            //     // alert(respuesta);
+            //     Swal.fire({
+            //         icon: 'success',
+            //         background: 'black',
+            //         title: 'No ha habido ningún cambio',
+            //         showConfirmButton: false,
+            //         timer: 1500
+            //     });
+            //     registrar.value = "Registrar";
+            //     id.value = "";
+
+            //     listar('')
+            //     form.reset();
+            // }
         } else {
             console.error(ajax.status + ': ' + ajax.statusText);
             /* alert(ajax.responseText); */
         }
     }
     ajax.send(formdata);
-
-
 });

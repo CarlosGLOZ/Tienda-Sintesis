@@ -3,13 +3,14 @@
 @push('head')
     <link rel="stylesheet" href="{{ asset('../resources/css/product.css') }}">
     <script src="{{ asset('../resources/js/review.js') }}" defer></script>
+    <script src="{{ asset('../resources/js/ajax/productViewAJAX.js') }}" defer></script>
 @endpush
 
 @section('content')
     <div id="product-main">
         <div id="product-column">
             <div id="product-wrapper">
-                <img id="product-image" src="{{ asset('../resources/images/products/prod_'.$product->id.'.png') }}" alt="product">
+                <img id="product-image" src="{{ asset('storage/images/products/prod_'.$product->id.'.png') }}" alt="product">
                 <div id="product-info-wrapper">
                     <div id="product-info">
                         <div>
@@ -35,8 +36,17 @@
 
                             {{-- Edit & delete for admins --}}
                             @can('change', $product)
-                                <button class="standard-button add-to-cart-button"><a href="">Edit</a></button>
-                                <button class="standard-button-dark add-to-cart-button"><a href="">Delete</a></button>
+                                <form action="{{ route('product.edit') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $product->id }}">
+                                    <button type="submit" class="standard-button add-to-cart-button">Edit</button>
+                                </form>
+                                <form action="{{ route('product.destroy') }}" method="post" id="product-destroy-form" data-redirect="{{ route('home') }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="id", value="{{ $product->id }}">
+                                    <button type="submit" class="standard-button-dark add-to-cart-button">Delete</button>
+                                </form>
                             @endcan
                         @endauth
                         @guest

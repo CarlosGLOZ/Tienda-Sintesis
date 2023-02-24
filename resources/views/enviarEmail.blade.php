@@ -1,10 +1,9 @@
-@extends('layouts.correo')
+@extends('layouts.app')
 
 
 
 
 @section('content')
 
-<x-navbar_correo />
 <x-correo />
 @endsection

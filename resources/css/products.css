@@ -16,11 +16,14 @@ html {
   justify-content: center;
 }
 .showcase-message {
-  padding-left: 100px;
-  padding-right: 100px;
-  height: 37px;
+  padding: 0px 100px;
   display: flex;
   align-items: center;
+}
+@media (max-width: 600px) {
+  .showcase-message {
+    padding: 0px 35px;
+  }
 }
 .showcase-message .message {
   font-size: 15px;

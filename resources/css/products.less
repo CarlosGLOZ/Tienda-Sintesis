@@ -21,9 +21,10 @@ html{
 }
 
 .showcase-message {
-    padding-left: 100px;
-    padding-right: 100px;
-    height: 37px;
+    padding: 0px 100px;
+    @media(max-width: 600px){
+        padding: 0px 35px;
+    }
     display: flex;
     align-items: center;
 

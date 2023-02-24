@@ -1,11 +1,12 @@
 @props([])
 
+<div id="overlay-body"></div>
 {{-- SIDE - NAVBAR --}}
 <div id="side-navbar" class="sidenav">
     <a href="javascript:void(0)" id="closebtn" class="closebtn">&times;</a>
     @guest
-        <a href="{{ route('auth.signin') }}">Sign In</a>
-        <a href="{{ route('auth.signup') }}">Sign Up</a>
+        <a class="nav-icon-link" id="nav-icon-user-link" href="{{ route('auth.signin') }}"><i id="nav-icon-user" class="fa-solid fa-address-card nav-icon"></i>Sign In</a>
+        <a class="nav-icon-link" id="nav-icon-user-link" href="{{ route('auth.signup') }}"><i id="nav-icon-user" class="fa-solid fa-arrow-right-from-bracket"></i>Sign Up</a>
     @endguest
     @auth
         <a href="" class="nav-icon-link" id="nav-icon-user-link"><i class="fa-regular fa-user nav-icon" id="nav-icon-user"></i>{{ auth()->user()->name }}</a>

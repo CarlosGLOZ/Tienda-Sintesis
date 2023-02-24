@@ -16,7 +16,7 @@ class ShoppingCartController extends Controller
     {
         // If user is not logged in
         if (!Auth::check()) {
-            return view('auth.signin');
+            return redirect()->route('auth.signin');
         }
 
         // If product is already on shopping cart
@@ -39,7 +39,7 @@ class ShoppingCartController extends Controller
     {
         // If user is not logged in
         if (!Auth::check()) {
-            return view('auth.signin');
+            return redirect()->route('auth.signin');
         }
 
         $items = ShoppingCart::with('product')->where('user_id', auth()->user()->id)->get();
@@ -54,7 +54,7 @@ class ShoppingCartController extends Controller
     {
         // If user is not logged in
         if (!Auth::check()) {
-            return view('auth.signin');
+            return redirect()->route('auth.signin');
         }
         
         ShoppingCart::where(['user_id' => auth()->user()->id, 'product_id' => $product->id])->delete();

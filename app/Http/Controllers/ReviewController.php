@@ -16,7 +16,7 @@ class ReviewController extends Controller
     {
         // If user is not logged in
         if (!Auth::check()) {
-            return view('auth.signin');
+            return redirect()->route('auth.signin');
         }
         
         $review = $request->except('_token');
@@ -40,7 +40,7 @@ class ReviewController extends Controller
     {
         // If user is not logged in
         if (!Auth::check()) {
-            return view('auth.signin');
+            return redirect()->route('auth.signin');
         }
         
         $review->delete();

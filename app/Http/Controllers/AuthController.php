@@ -95,20 +95,77 @@ class AuthController extends Controller
     public function FuncionMail(Request $req){
         $co=$req->input('Destinatario');
 
-        
+//CORREO PARA TODOS LOS USUARIOS
+if ($co=="Todos los usuarios") {
+  $correos = User::select('email')->get();
 
-        $sub=$req->input('Asunto');
+  $sub=$req->input('Asunto');
 
-        $msg=$req->input('Mensaje');
+  $msg=$req->input('Mensaje');
 
 
 
-        $datos=array('msg'=>$msg);
+  $datos=array('msg'=>$msg);
 
+
+  foreach ($correos as $correo) {
+      $enviar= new EnviarCorreo($datos);
+      $enviar->sub=$sub;
+      Mail::to($correo)->send($enviar);
+  }
+
+  return redirect('/enviarEmail');
+  
+} else {
+    //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
+    $correos=explode(',', $co);   
+
+    $sub=$req->input('Asunto');
+
+    $msg=$req->input('Mensaje');
+
+
+
+    $datos=array('msg'=>$msg);
+
+ 
+    foreach ($correos as $correo) {
         $enviar= new EnviarCorreo($datos);
         $enviar->sub=$sub;
-        Mail::to($co)->send($enviar);
-        return redirect('/enviarEmail');
+        Mail::to($correo)->send($enviar);
     }
 
+
+    
+        // $enviar= new EnviarCorreo($datos);
+        // $enviar->sub=$sub;
+        // Mail::to($co)->send($enviar);
+    
+  
+    return redirect('/enviarEmail');
 }
+
+
+    }
+
+
+
+public function listarCorreos(Request $req){
+
+    $buscador=$req->except('_token');
+    /* $buscador='Mc'; */
+    /* echo $buscador; */
+    /* echo $buscador['buscar']; */
+    /* dd($request); */
+    $consulta=User::where('email', 'like', '%'.$buscador['buscar'].'%')->get();
+    /* $count = $consulta->count(); */
+    return response()->json($consulta);
+
+
+
+}
+
+
+
+}
+

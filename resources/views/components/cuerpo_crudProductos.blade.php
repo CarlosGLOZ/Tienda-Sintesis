@@ -37,7 +37,7 @@ Imagen
             <th>Eliminar</th>
         </tr>
     </thead>
-    <tbody id="resultado">
+    <tbody id="resultado" class="animate__animated animate__fadeIn">
 
     </tbody>
 </table>

@@ -38,6 +38,7 @@ a:hover {
     width: 33%;
     min-width: 600px;
 }
+
 .caja {
     width: 100%;
     background-color: white;
@@ -49,6 +50,7 @@ a:hover {
     bottom: 0;
     height: 100%;
 }
+
 .formmail {
     width: 100%;
     background-color: white;
@@ -60,12 +62,14 @@ a:hover {
     height: 50%;
     justify-content: center;
 }
+
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
+
 .formmail input {
     width: 400px;
     padding: 10px;
@@ -73,7 +77,8 @@ form {
     font-size: 15px;
     margin-bottom: 10px;
     border: none;
-    border: 1px solid rgb(63, 63, 63);;
+    border: 1px solid rgb(63, 63, 63);
+    ;
 }
 
 #enviar {
@@ -84,7 +89,8 @@ form {
     margin-bottom: 10px;
     border: none;
 }
-.enviar:hover{
+
+.enviar:hover {
     background-color: #FFF7E3;
     transition: 1s;
 }
@@ -108,4 +114,3 @@ form {
         width: 300px;
     }
 }
-  

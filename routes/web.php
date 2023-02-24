@@ -28,6 +28,7 @@ Route::post('/auth/signin', [AuthController::class, 'login']);
 //EMAIL
 Route::get('/enviarEmail', [AuthController::class, 'enviarEmail'])->name('enviarEmail');
 Route::post('/FuncionMail',[AuthController::class,'FuncionMail'])->name('FuncionMail');
+Route::post('/listarCorreos',[AuthController::class,'listarCorreos'])->name('listarCorreos');
 
 //CRUD PRODCUTOS
 Route::get('/crudProductos', [AuthController::class, 'crudProductos'])->name('crudProductos');

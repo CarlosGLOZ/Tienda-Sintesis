@@ -41,9 +41,7 @@ Route::get('/products/{id}', [ProductController::class, 'find'])->name('product.
 Route::post('/products/table',[ProductController::class, 'table'])->name('product.table');
 Route::delete('/products/destroy',[ProductController::class, 'destroy'])->name('product.destroy');
 Route::post('/products/store',[ProductController::class, 'store'])->name('product.store');
-
-Route::post('/products/editarProducto',[ProductController::class, 'editarProducto'])->name('editarProducto');
-Route::post('/products/update',[ProductController::class, 'editarProducto'])->name('product.update');
+Route::put('/products/update',[ProductController::class, 'update'])->name('product.update');
 
 // Reviews
 Route::post('/reviews/store/{product}', [ReviewController::class, 'store'])->name('review.store');

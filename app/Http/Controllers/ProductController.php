@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -81,7 +82,7 @@ class ProductController extends Controller
             Product::find($id)->delete();
             $return = ['OK'];
         } catch (\Throwable $th) {
-            $return = ['NOT - OK ', 'error' => $th];
+            $return = ['NOT - OK ', 'error' => $th->getMessage()];
         }
 
         return $return;
@@ -127,7 +128,7 @@ class ProductController extends Controller
             
             return ['status' => 'OK', 'message' => 'Product created successfully', 'icon' => 'success'];
         } catch (\Throwable $th) {
-            return ['status' => 'OK', 'message' => $th, 'icon' => 'error'];
+            return ['status' => 'NOT OK', 'message' => $th->getMessage(), 'icon' => 'error'];
         }
     }
 
@@ -138,7 +139,7 @@ class ProductController extends Controller
     {
         // Validate that user is logged in and an admin
         if (!Auth::check() || auth()->user()->admin != 1) {
-            return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
+            return back()->with(['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error']);
         }
 
         $id = $request->input('id');
@@ -148,18 +149,52 @@ class ProductController extends Controller
         return view('product.create', compact(['product']));
     }
 
-    public function editarProducto(Request $re){
-        $id = $re->input('id');
+    public function update(Request $request){
 
+        // Use Validator class to avoid automatic response by laravel
+        $validation = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+                'description' => 'required',
+                'price' => 'required|numeric|min:0',
+                'img' => 'file|image'
+            ]
+        );
 
+        if ($validation->stopOnFirstFailure()->fails()) {
+            return ['status' => 'NOT OK', 'message' => $validation->errors()->first(), 'icon' => 'error'];
+        }
+
+        $id = $request->input('id');
+
+        $product=Product::find($id);
+
+        $product_data = $request->except('_token', '_method', 'id', 'img');
+
+        try {
+            // Change image
+            $existingImagePath = public_path("storage/images/products/prod_".$id.".png");
+            
+            $file=$request->file('img');
+
+            
+            if ($file != null){            
+                // Delete current image if exists
+                // return ['status' => 'OK', 'message' => file_exists($existingImagePath), 'icon' => 'error'];
+                if (file_exists($existingImagePath)) {
+                    File::delete($existingImagePath);
+                }
+
+                $file->move(public_path("storage\images\products"), "\prod_".$id.".png");
+            } 
+
+            $product->update($product_data);
+        } catch (\Throwable $th) {
+            return ['status' => 'OK', 'message' => $th->getMessage(), 'icon' => 'error'];
+        }
     
-    
-            $restaurante=Product::find($id);
-        
-
-            return response()->json($restaurante);
-        
-
+        return ['status' => 'OK', 'message' => 'Product updated successfully', 'icon' => 'success'];
     }
 
 }

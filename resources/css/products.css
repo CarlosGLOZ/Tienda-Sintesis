@@ -9,7 +9,7 @@ html {
 }
 .product-showcase {
   width: 100%;
-  min-height: 80vh;
+  min-height: 50vh;
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fill, 360px);

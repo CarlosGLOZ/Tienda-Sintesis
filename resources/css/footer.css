@@ -4,7 +4,7 @@
   display: flex;
   border-top: solid 3px;
   gap: 50px;
-  padding-top: 20px;
+  padding: 25px 0px;
   border-color: rgba(0, 0, 0, 0.31);
 }
 @media (max-width: 950px) {

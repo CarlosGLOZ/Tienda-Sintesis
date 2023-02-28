@@ -32,3 +32,7 @@ Route::get('/products/{id}', [ProductController::class, 'find'])->name('product.
 
 // Shopping cart
 Route::get('/cart', [ProductController::class, 'cart'])->name('cart');
+
+// Pagos por PAYPAL
+Route::get('/pagar/{correo}/{precio}', [ProductController::class, 'pagar']);
+Route::get('/comprado/{correo}', [ProductController::class, 'comprado']);

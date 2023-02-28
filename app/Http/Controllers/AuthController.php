@@ -82,85 +82,112 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 
-    // -----------------------------------------------------------
 
     public function enviarEmail(){
         return view('enviarEmail');
     }
 
+
+    public function crudProductos(){
+        return view('crudProductos');
+    }
+
     public function FuncionMail(Request $req){
         $co=$req->input('Destinatario');
-
-        //CORREO PARA TODOS LOS USUARIOS
-        if ($co=="Todos los usuarios") {
-        $correos = User::select('email')->get();
 
         $sub=$req->input('Asunto');
 
         $msg=$req->input('Mensaje');
 
-
-
-        $datos=array('msg'=>$msg);
-
-
-        foreach ($correos as $correo) {
-            $enviar= new EnviarCorreo($datos);
-            $enviar->sub=$sub;
-            Mail::to($correo)->send($enviar);
-        }
-
-        return redirect('/enviarEmail');
-        
-        } else {
-            //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
-            $correos=explode(',', $co);   
-
-            $sub=$req->input('Asunto');
-
-            $msg=$req->input('Mensaje');
-
+ if ((empty($co)) || (empty($sub)) ) {
+    
+    return redirect('/enviarEmail?mal=va');
+ } else {
+    
+    //CORREO PARA TODOS LOS USUARIOS
+if ($co=="Todos los usuarios") {
+    $correos = User::select('email')->get();
+  
+  
+  
+  
+  
+    $datos=array('msg'=>$msg);
+  
 
     
 
-            $datos=array('msg'=>$msg);
 
+    foreach ($correos as $correo) {
+        $enviar= new EnviarCorreo($datos);
+        $enviar->sub=$sub;
+        Mail::to($correo)->send($enviar);
+    }
+  
+    return redirect('/enviarEmail');
+    
+  } else {
+      //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
+      $correos=explode(',', $co);   
+  
+      $sub=$req->input('Asunto');
+  
+      $msg=$req->input('Mensaje');
+  
+  
+  
+      $datos=array('msg'=>$msg);
+  
+   
+      $formato=true;
+
+      foreach ($correos as $correo) {
+        if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+            $formato=false;
+         }
+      }
+
+        if ($formato==true) {
         
-            foreach ($correos as $correo) {
-                $enviar= new EnviarCorreo($datos);
-                $enviar->sub=$sub;
-                Mail::to($correo)->send($enviar);
-            }
-
-
-            
-                // $enviar= new EnviarCorreo($datos);
-                // $enviar->sub=$sub;
-                // Mail::to($co)->send($enviar);
-            
-        
-            return redirect('/enviarEmail');
+      foreach ($correos as $correo) {
+        $enviar= new EnviarCorreo($datos);
+        $enviar->sub=$sub;
+        Mail::to($correo)->send($enviar);
+    }  
+    return redirect('/enviarEmail?email=si');
+        } else {
+            return redirect('/enviarEmail?email=no');
         }
 
+  
+  
+}
+ }
 
-    }
 
-
-
-    public function listarCorreos(Request $req){
-
-        $buscador=$req->except('_token');
-        /* $buscador='Mc'; */
-        /* echo $buscador; */
-        /* echo $buscador['buscar']; */
-        /* dd($request); */
-        $consulta=User::where('email', 'like', '%'.$buscador['buscar'].'%')->get();
-        /* $count = $consulta->count(); */
-        return response()->json($consulta);
 
 
 
     }
+
+
+
+
+
+public function listarCorreos(Request $req){
+
+    $buscador=$req->except('_token');
+    /* $buscador='Mc'; */
+    /* echo $buscador; */
+    /* echo $buscador['buscar']; */
+    /* dd($request); */
+    $consulta=User::where('email', 'like', '%'.$buscador['buscar'].'%')->get();
+    /* $count = $consulta->count(); */
+    return response()->json($consulta);
+
+
+
+}
 
 
 public function pagar($correo,$precio){

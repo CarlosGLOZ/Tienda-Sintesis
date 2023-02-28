@@ -50,7 +50,7 @@ destinatario.addEventListener("keyup", () => {
                     box += `
                         <div class="element-busc">
                         <br>
-                            <p name='p-buscador' class='p-buscador'>${element.email}, </p>
+                            <p name='p-buscador' class='p-buscador'>${element.email},</p>
                             
                         </div>`;
                 });
@@ -82,10 +82,19 @@ destinatario.addEventListener("keyup", () => {
 
 
 function ponerValueEnBuscador(evt) {
-    /* console.log(evt.target.textContent); */
-
-    destinatario.value += evt.target.textContent;
+    const correoDiv = document.createElement("div");
+    correoDiv.classList.add("correo");
+    var correoSeleccionado = evt.target.textContent.trim();
+    var ultimoIndiceComa = destinatario.value.lastIndexOf(',');
+    var prefijo = '';
+    if (ultimoIndiceComa !== -1) {
+        prefijo = destinatario.value.substring(0, ultimoIndiceComa + 1);
+        correoDiv.textContent = prefijo
+    }
+    destinatario.value = prefijo + correoSeleccionado;
     listarbuscador.style.display = 'none';
+
+
 }
 
 
@@ -94,5 +103,13 @@ todos.addEventListener("click", () => {
 
 
     destinatario.value = "Todos los usuarios"
+    listarbuscador.style.display = 'none';
 
+})
+
+
+
+reiniciar.addEventListener("click", () => {
+
+    listarbuscador.style.display = 'none';
 })

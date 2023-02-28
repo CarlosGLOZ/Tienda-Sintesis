@@ -95,58 +95,82 @@ class AuthController extends Controller
     public function FuncionMail(Request $req){
         $co=$req->input('Destinatario');
 
-//CORREO PARA TODOS LOS USUARIOS
+        $sub=$req->input('Asunto');
+
+        $msg=$req->input('Mensaje');
+
+ if ((empty($co)) || (empty($sub)) ) {
+    
+    return redirect('/enviarEmail?mal=va');
+ } else {
+    
+    //CORREO PARA TODOS LOS USUARIOS
 if ($co=="Todos los usuarios") {
-  $correos = User::select('email')->get();
-
-  $sub=$req->input('Asunto');
-
-  $msg=$req->input('Mensaje');
-
-
-
-  $datos=array('msg'=>$msg);
-
-
-  foreach ($correos as $correo) {
-      $enviar= new EnviarCorreo($datos);
-      $enviar->sub=$sub;
-      Mail::to($correo)->send($enviar);
-  }
-
-  return redirect('/enviarEmail');
+    $correos = User::select('email')->get();
   
-} else {
-    //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
-    $correos=explode(',', $co);   
-
-    $sub=$req->input('Asunto');
-
-    $msg=$req->input('Mensaje');
-
-
-
+  
+  
+  
+  
     $datos=array('msg'=>$msg);
+  
 
- 
+    
+
+
     foreach ($correos as $correo) {
         $enviar= new EnviarCorreo($datos);
         $enviar->sub=$sub;
         Mail::to($correo)->send($enviar);
     }
-
-
-    
-        // $enviar= new EnviarCorreo($datos);
-        // $enviar->sub=$sub;
-        // Mail::to($co)->send($enviar);
-    
   
     return redirect('/enviarEmail');
+    
+  } else {
+      //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
+      $correos=explode(',', $co);   
+  
+      $sub=$req->input('Asunto');
+  
+      $msg=$req->input('Mensaje');
+  
+  
+  
+      $datos=array('msg'=>$msg);
+  
+   
+      $formato=true;
+
+      foreach ($correos as $correo) {
+        if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+            $formato=false;
+         }
+      }
+
+        if ($formato==true) {
+        
+      foreach ($correos as $correo) {
+        $enviar= new EnviarCorreo($datos);
+        $enviar->sub=$sub;
+        Mail::to($correo)->send($enviar);
+    }  
+    return redirect('/enviarEmail?email=si');
+        } else {
+            return redirect('/enviarEmail?email=no');
+        }
+
+  
+  
 }
+ }
+
+
+
 
 
     }
+
+
 
 
 
@@ -166,6 +190,54 @@ public function listarCorreos(Request $req){
 }
 
 
+public function pagar($correo,$precio){
+    return $correo;
+    return $precio;
+   $apiContext = new \PayPal\Rest\ApiContext(
+        new \PayPal\Auth\OAuthTokenCredential(
+            config('services.paypal.client_id'),     // ClientID
+            config('services.paypal.secret')      // ClientSecret
+        )
+    );
+
+
+    $payer = new \PayPal\Api\Payer();
+    $payer->setPaymentMethod('paypal');
+
+
+    $amount = new \PayPal\Api\Amount();
+    //precio a pagar
+    $amount->setTotal($precio);
+    $amount->setCurrency('EUR');
+
+
+    $transaction = new \PayPal\Api\Transaction();
+    $transaction->setAmount($amount);
+    //le envioa la pagina informacion del id
+    //si se cancela lo llevo a la pagina que quiero
+    $redirectUrls = new \PayPal\Api\RedirectUrls();
+    $redirectUrls
+    ->setReturnUrl(url("comprado/".$correo))  //Ruta 'OK'
+    ->setCancelUrl(url("/cesta"));        //Ruta 'Cancel'
+
+
+    $payment = new \PayPal\Api\Payment();
+    $payment->setIntent('sale')
+        ->setPayer($payer)
+        ->setTransactions(array($transaction))
+        ->setRedirectUrls($redirectUrls);
+    try {
+        $payment->create($apiContext);
+        //me redirige a la pagina de paypal
+        return redirect()->away( $payment->getApprovalLink());
+
+
+    }catch (\PayPal\Exception\PayPalConnectionException $ex) {
+        // This will print the detailed information on the exception.
+        //REALLY HELPFUL FOR DEBUGGING
+        echo $ex->getData();
+    }
+}
 
 }
 

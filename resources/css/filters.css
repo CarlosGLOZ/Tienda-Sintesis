@@ -10,8 +10,9 @@
   width: calc(100% - 200px);
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
-  padding-left: 100px;
+  padding-left: 5%;
   padding-right: 100px;
 }
 .search-filters div {
@@ -78,4 +79,14 @@
   cursor: pointer;
   border-bottom: solid 1px;
   border-top: none;
+}
+@media (max-width: 900px) {
+  #filter-icon {
+    display: none;
+  }
+}
+@media (max-width: 776px) {
+  .search-filters {
+    height: auto;
+  }
 }

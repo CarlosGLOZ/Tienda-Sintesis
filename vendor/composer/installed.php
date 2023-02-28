@@ -3,7 +3,11 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
+<<<<<<< HEAD
         'reference' => '184392a6dac01e273540b458a65f8feda5ed512a',
+=======
+        'reference' => 'f38d6c0c4ac5c2e10474aeaef20160e977051cce',
+>>>>>>> adb8beecce94eeb3b2b1bfba151256264d1d2748
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -18,6 +22,15 @@
             'install_path' => __DIR__ . '/../asm89/stack-cors',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'barryvdh/laravel-debugbar' => array(
+            'pretty_version' => 'v3.7.0',
+            'version' => '3.7.0.0',
+            'reference' => '3372ed65e6d2039d663ed19aa699956f9d346271',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../barryvdh/laravel-debugbar',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'brick/math' => array(
             'pretty_version' => '0.9.3',
@@ -397,7 +410,11 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
+<<<<<<< HEAD
             'reference' => '184392a6dac01e273540b458a65f8feda5ed512a',
+=======
+            'reference' => 'f38d6c0c4ac5c2e10474aeaef20160e977051cce',
+>>>>>>> adb8beecce94eeb3b2b1bfba151256264d1d2748
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -474,6 +491,15 @@
             'install_path' => __DIR__ . '/../league/mime-type-detection',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'maximebf/debugbar' => array(
+            'pretty_version' => 'v1.18.2',
+            'version' => '1.18.2.0',
+            'reference' => '17dcf3f6ed112bb85a37cf13538fd8de49f5c274',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../maximebf/debugbar',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'mockery/mockery' => array(
             'pretty_version' => '1.5.1',

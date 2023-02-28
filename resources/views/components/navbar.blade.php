@@ -18,32 +18,33 @@
         @endguest
         @auth
             <div class="icon-wrapper">
-                <div class="nav-container">
-                    <a href="" class="nav-icon-link" id="nav-icon-user-link"><i class="fa-regular fa-user nav-icon" id="nav-icon-user"></i>{{ auth()->user()->name }}</a>
+                <div class="nav-container" id="navbar-user-wrapper">
+                    <a href="{{ route('cart.show') }}" class="nav-icon-link" id="nav-icon-user-link"><i class="fa-regular fa-user nav-icon" id="nav-icon-user"></i>{{ auth()->user()->name }}</a>
                 </div>
 
-                @if (auth()->user()->admin==0)
+
                 <div class="nav-container">
-                    <a href="" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-cart-shopping nav-icon"></i></a>
+                    <a href="{{ route('cart.show') }}" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-cart-shopping nav-icon"></i></a>
                 </div>
-                @endif
+
                 @if (auth()->user()->admin==1)
-                <div class="nav-container">
-                 
-                    <a href="{{ route('enviarEmail') }}" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-envelope"></i></a>
-                </div>
 
-                <div class="nav-container">
-                 
-                    <a href="{{ route('crudProductos') }}" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-folder-plus"></i></a>
-                </div>
+                    <div class="nav-container">
+                    
+                        <a href="{{ route('enviarEmail') }}" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-envelope"></i></a>
+                    </div>
+
+                    <div class="nav-container">
+                    
+                        <a href="{{ route('product.create') }}" class="nav-icon-link" id="nav-icon-cart-link"><i class="fa-solid fa-folder-plus"></i></a>
+                    </div>
                 
     
                 @endif
-                {{-- <div class="nav-container">
-                    <button class="nav-button" id="nav-sign-up-button"><a href="{{ route('auth.signout') }}">Sign Out</a></button>
-                </div> --}}
 
+                <div class="nav-container">
+                    <button class="nav-button" id="nav-sign-up-button"><a href="{{ route('auth.signout') }}">Sign Out</a></button>
+                </div>
                 
             </div>
         @endauth

@@ -5,7 +5,8 @@
 
 <div class="search-filters" id="main-search-filters">
     <div class="filters-left">
-        <div class="filter-container">
+        {{-- Filter Icon --}}
+        <div class="filter-container" id="filter-icon">
             <i class="fa-solid fa-sliders"></i>
             <p class="filter-text">Filter</p>
         </div>

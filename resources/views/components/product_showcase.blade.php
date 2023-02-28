@@ -8,6 +8,8 @@
     <script>const productRoute = "{{ route('product.find', '') }}";</script>
 @endpush
 
+<div id="tag-list"></div> <!-- ANCHOR TAG: LISTADO -->
+
 <div class="showcase-message">
     <p class="message">Showing 0 results</p>
 </div>

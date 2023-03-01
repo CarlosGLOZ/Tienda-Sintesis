@@ -12,14 +12,16 @@
             <input type="button" class="nav-button" id="todos" value="Todos">
             
             @csrf
-            <input type="text" id="destinatario" name="Destinatario" placeholder="Destinatario">
+            {{-- <input type="text" id="destinatario" name="Destinatario" placeholder="Destinatario"> --}}
 
-            <input type="text" id="asunto" name="Asunto" placeholder="Asunto">
+            <textarea class="correos" id="destinatario" name="Destinatario" placeholder="Destinatario"></textarea>
+
+            <input type="text" id="asunto" name="Asunto" placeholder="Asunto" >
 
             <textarea name="" id="mensaje" name="Mensaje" placeholder="Mensaje"></textarea>
 
             <input type="submit" value="ENVIAR CORREO" id="enviar" class="enviar">
-            <input type="reset" value="Borrar">
+            <input type="reset" id="reiniciar" value="Borrar">
         </form>
 
         <div id="listarbuscador" name="listarbuscador" >
@@ -29,6 +31,93 @@
 </div>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+
+{{-- SWETALERTS --}}
+
+
+
+{{-- TODO CORRECTO --}}
+<?php
+if (isset($_GET['email'])) {
+if ($_GET['email']=='si') {
+    ?>
+    <script>
+ Swal.fire({
+                            icon: 'success',
+                            title: 'Correo enviado correctamente',
+                            showConfirmButton: false,
+                            background: '#17263D',
+                            color: 'white',
+                            timerProgressBar: true,
+
+                            timer: 2000
+                        })
+
+    </script>
+    <?php
+}
+}
+
+?>
+
+
+
+{{-- CAMPOS VACIOS --}}
+
+
+<?php
+if (isset($_GET['mal'])) {
+if ($_GET['mal']=='va') {
+    ?>
+    <script>
+ Swal.fire({
+                            icon: 'error',
+                            title: 'Campos vacíos',
+                            showConfirmButton: false,
+                            background: '#17263D',
+                            color: 'white',
+                            timerProgressBar: true,
+
+                            timer: 2000
+                        })
+
+    </script>
+    <?php
+}
+}
+
+?>
+
+
+{{-- ALGÚN MAIL INCORRECTO --}}
+
+
+<?php
+if (isset($_GET['email'])) {
+if ($_GET['email']=='no') {
+    ?>
+    <script>
+ Swal.fire({
+                            icon: 'error',
+                            title: 'UPS',
+                            text:'Formato incorrecto',
+                            showConfirmButton: false,
+                            background: '#17263D',
+                            color: 'white',
+                            timerProgressBar: true,
+
+                            timer: 2000
+                        })
+
+    </script>
+    <?php
+}
+}
+
+?>
 
 
 <script src="{{asset('correo.js')}}"></script>

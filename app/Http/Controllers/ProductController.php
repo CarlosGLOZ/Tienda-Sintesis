@@ -197,4 +197,73 @@ class ProductController extends Controller
         return ['status' => 'OK', 'message' => 'Product updated successfully', 'icon' => 'success'];
     }
 
+
+    public function pagar(Request $request){
+
+        // Validate items sent and add up price
+        $precio = 0;
+        $items = $request->input('items');
+
+        foreach ($items as $id) {
+            $product = Product::find($id);
+
+            if (!$product) {
+                return back()->with('status', 'Product not found');
+            }
+
+            $precio += $product->price;
+
+            // Save products for receipt 
+        }
+
+        $correo = auth()->user()->email;
+
+        $apiContext = new \PayPal\Rest\ApiContext(
+            new \PayPal\Auth\OAuthTokenCredential(
+                config('services.paypal.client_id'), // ClientID
+                config('services.paypal.secret') // ClientSecret
+            )
+        );
+
+
+        $payer = new \PayPal\Api\Payer();
+        $payer->setPaymentMethod('paypal');
+
+
+        $amount = new \PayPal\Api\Amount();
+        //precio a pagar
+        $amount->setTotal($precio);
+        $amount->setCurrency('EUR');
+
+
+        $transaction = new \PayPal\Api\Transaction();
+        $transaction->setAmount($amount);
+        //le envio a la pagina informacion del id
+        //si se cancela lo llevo a la pagina que quiero
+        $redirectUrls = new \PayPal\Api\RedirectUrls();
+        $redirectUrls
+        ->setReturnUrl(url("comprado/".$correo))  //Ruta 'OK'
+        ->setCancelUrl(url("/cesta"));        //Ruta 'Cancel'
+
+
+        $payment = new \PayPal\Api\Payment();
+        $payment->setIntent('sale')
+            ->setPayer($payer)
+            ->setTransactions(array($transaction))
+            ->setRedirectUrls($redirectUrls);
+        try {
+            $payment->create($apiContext);
+            //me redirige a la pagina de paypal
+            return redirect()->away( $payment->getApprovalLink());
+        }catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            // This will print the detailed information on the exception.
+            //REALLY HELPFUL FOR DEBUGGING
+            echo $ex->getData();
+        }
+    }
+
+    public function comprado($correo, Request $request){
+        // return $correo;
+        dd($request);
+    }
 }

@@ -53,5 +53,5 @@ Route::post('/cart/store/{product}', [ShoppingCartController::class, 'store'])->
 Route::delete('/cart/destroy/{product}', [ShoppingCartController::class, 'destroy'])->name('cart.destroy');
 
 // Pagos por PAYPAL
-Route::get('/pagar/{correo}/{precio}', [ProductController::class, 'pagar']);
-Route::get('/comprado/{correo}', [ProductController::class, 'comprado']);
+Route::post('/products/pay', [ProductController::class, 'pagar'])->name('product.pay');
+Route::get('/comprado/{correo}', [ProductController::class, 'comprado'])->name('product.bought');

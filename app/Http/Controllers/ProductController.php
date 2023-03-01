@@ -198,9 +198,26 @@ class ProductController extends Controller
     }
 
 
-    public function pagar($correo, $precio){
-        // return $correo;
-        // return $precio;
+    public function pagar(Request $request){
+
+        // Validate items sent and add up price
+        $precio = 0;
+        $items = $request->input('items');
+
+        foreach ($items as $id) {
+            $product = Product::find($id);
+
+            if (!$product) {
+                return back()->with('status', 'Product not found');
+            }
+
+            $precio += $product->price;
+
+            // Save products for receipt 
+        }
+
+        $correo = auth()->user()->email;
+
         $apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
                 config('services.paypal.client_id'), // ClientID
@@ -221,7 +238,7 @@ class ProductController extends Controller
 
         $transaction = new \PayPal\Api\Transaction();
         $transaction->setAmount($amount);
-        //le envioa la pagina informacion del id
+        //le envio a la pagina informacion del id
         //si se cancela lo llevo a la pagina que quiero
         $redirectUrls = new \PayPal\Api\RedirectUrls();
         $redirectUrls
@@ -238,8 +255,6 @@ class ProductController extends Controller
             $payment->create($apiContext);
             //me redirige a la pagina de paypal
             return redirect()->away( $payment->getApprovalLink());
-
-
         }catch (\PayPal\Exception\PayPalConnectionException $ex) {
             // This will print the detailed information on the exception.
             //REALLY HELPFUL FOR DEBUGGING

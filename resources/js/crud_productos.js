@@ -35,10 +35,10 @@ function listar() {
                     <td> <img style="width: 100px;height:100px" class='product-img' onclick=redirectToEdit(${element.id}) src="../storage/images/products/prod_${element.id}.png?x=${Math.random()}"> </td>
                   
                     <td>
-                        <button type='button' class='standard-button' onclick=redirectToEdit(${element.id})>Editar</button>
+                        <button type='button' class='standard-button prueba' onclick=redirectToEdit(${element.id})>Editar</button>
                     </td>
                     <td>
-                        <button type='button' class='standard-button-dark' onclick=destroyProduct('${element.id}')>Eliminar</button>
+                        <button type='button' class='standard-button-dark prueba' onclick=destroyProduct('${element.id}')>Eliminar</button>
                     </td>
                 </tr>`;
 
@@ -61,7 +61,7 @@ function listar() {
 
 function destroyProduct(id) {
     Swal.fire({
-        title: '¿Quiere eliminar este producto?',
+        title: '¿Quieres eliminar este producto?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3894a3',

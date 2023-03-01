@@ -28,4 +28,9 @@ class Product extends Model
         return $this->hasMany(Review::class);
     }
 
+
+    public function facturas()
+    {
+        return $this->belongsToMany(factura::class);
+    }
 }

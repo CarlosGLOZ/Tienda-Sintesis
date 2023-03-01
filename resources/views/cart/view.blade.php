@@ -10,7 +10,9 @@
             @foreach ($items as $item)
                 <div class="cart-item">
                     <div class="cart-image-wrapper">
-                        <img src="{{ asset('../resources/images/products/prod_'.$item->product->id.'.png') }}" class="cart-product-image">
+                        <a href="{{ route('product.find', $item->product->id) }}">
+                            <img src="{{ asset('../resources/images/products/prod_'.$item->product->id.'.png') }}" class="cart-product-image">
+                        </a>
                     </div>
                     <div class="cart-info-wrapper">
                         <div class="cart-header-wrapper">

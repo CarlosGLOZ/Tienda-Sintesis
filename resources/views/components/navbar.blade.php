@@ -6,8 +6,8 @@
     <a href="javascript:void(0)" id="closebtn" class="closebtn">&times;</a>
     <div id="sidenav-contents">
         @guest
-            <a class="sidenav-icon-link" href="{{ route('auth.signin') }}"><i id="nav-icon-user" class="fa-solid fa-address-card nav-icon"></i><p>Sign In</p></a>
-            <a class="sidenav-icon-link" href="{{ route('auth.signup') }}"><i id="nav-icon-user" class="fa-solid fa-arrow-right-from-bracket"></i><p>Sign Up</p></a>
+            <a class="sidenav-icon-link" href="{{ route('auth.signin') }}"><i id="nav-icon-user" class="fa-solid fa-right-to-bracket"></i><p>Sign In</p></a>
+            <a class="sidenav-icon-link" href="{{ route('auth.signup') }}"><i id="nav-icon-user" class="fa-solid fa-user-plus"></i><p>Sign Up</p></a>
         @endguest
         @auth
             <a href="{{ route('cart.show') }}" class="sidenav-icon-link"><i class="fa-regular fa-user nav-icon" id="nav-icon-user"></i><p>{{ auth()->user()->name }}</p></a>
@@ -40,9 +40,9 @@
             <a href="{{ route('cart.show') }}" class="nav-icon-link"><i class="fa-solid fa-cart-shopping nav-icon"></i></a>
 
             @if (auth()->user()->admin==1)
-                <a href="{{ route('enviarEmail') }}" class="nav-icon-link"><i class="fa-solid fa-envelope"></i></a>
+                <a href="{{ route('enviarEmail') }}" class="nav-icon-link nav-icon-removable"><i class="fa-solid fa-envelope"></i></a>
 
-                <a href="{{ route('product.create') }}" class="nav-icon-link"-ico><i class="fa-solid fa-folder-plus"></i></a>
+                <a href="{{ route('product.create') }}" class="nav-icon-link nav-icon-removable"-ico><i class="fa-solid fa-folder-plus"></i></a>
             @endif
             <button class="standard-button-dark" id="nav-sign-out-button"><a href="{{ route('auth.signout') }}">Sign Out</a></button>
         @endauth

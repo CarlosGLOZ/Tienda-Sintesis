@@ -173,7 +173,8 @@
 .sidenav-icon-link {
   display: flex;
   flex-direction: row;
-  gap: 5px;
+  align-items: center;
+  gap: 15px;
   font-size: 25px;
   padding: 20px 10px 20px 20px;
   color: black;
@@ -185,4 +186,15 @@
 .sidenav-icon-link:hover {
   background-color: black;
   color: whitesmoke;
+}
+#navbar-side {
+  display: none;
+}
+@media (max-width: 765px) {
+  .nav-icon-removable {
+    display: none;
+  }
+  #navbar-side {
+    display: block;
+  }
 }

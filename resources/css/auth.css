@@ -124,3 +124,8 @@ a b {
 a:hover {
   text-decoration-color: black;
 }
+@media (max-width: 654px) {
+  .signup-wrapper {
+    min-width: 100%;
+  }
+}

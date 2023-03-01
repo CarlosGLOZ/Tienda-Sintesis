@@ -149,6 +149,9 @@ class ProductController extends Controller
         return view('product.create', compact(['product']));
     }
 
+    /**
+     * Update a record in the DB
+     */
     public function update(Request $request){
 
         // Use Validator class to avoid automatic response by laravel
@@ -198,6 +201,9 @@ class ProductController extends Controller
     }
 
 
+    /**
+     * Perform a payment for the specified products
+     */
     public function pagar(Request $request){
 
         // Validate items sent and add up price
@@ -242,8 +248,8 @@ class ProductController extends Controller
         //si se cancela lo llevo a la pagina que quiero
         $redirectUrls = new \PayPal\Api\RedirectUrls();
         $redirectUrls
-        ->setReturnUrl(url("comprado/".$correo))  //Ruta 'OK'
-        ->setCancelUrl(url("/cesta"));        //Ruta 'Cancel'
+        ->setReturnUrl(url(route('product.bought')))  //Ruta 'OK'
+        ->setCancelUrl(url(route('cart.show')));        //Ruta 'Cancel'
 
 
         $payment = new \PayPal\Api\Payment();
@@ -262,8 +268,10 @@ class ProductController extends Controller
         }
     }
 
-    public function comprado($correo, Request $request){
-        // return $correo;
-        dd($request);
+    /**
+     * Return view after purchase for confirmation
+     */
+    public function afterPurchase(Request $request){
+        return view('cart.afterPurchase');
     }
 }

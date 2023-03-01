@@ -41,9 +41,19 @@
   align-items: center;
   gap: 20px;
 }
+.search-filters .filters-left div {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 .search-filters .filters-right {
   justify-content: end;
   height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.search-filters .filters-right div {
   display: flex;
   align-items: center;
   gap: 20px;
@@ -96,5 +106,15 @@
 @media (max-width: 776px) {
   .search-filters {
     height: auto;
+  }
+}
+@media (max-width: 440px) {
+  .filters-right {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .filters-left {
+    flex-direction: column !important;
+    align-items: flex-start !important;
   }
 }

@@ -182,50 +182,7 @@
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
-
-    * {
-        // transform: translateX(20px);
-    }
 }
-
-// .sidenav a {
-//     text-decoration: none;
-//     font-size: 25px;
-//     color: #818181;
-//     display: block;
-//     transition: 0.3s;
-//     &:hover{
-//         i{border-color: transparent!important;}
-//     }
-//     &:nth-child(2){
-//         color: #d4696c;
-//         &:hover{
-//             color: #d4696c8b;
-//         }
-//     }
-//     &:nth-child(3){
-//         color: #395173;
-//         &:hover{
-//             color: #3951738b;
-//         }
-//     }
-//     &:nth-child(4){
-//         color: #57652a;
-//         &:hover{
-//             color: #57652a8b;
-//         }
-//     }
-//     &:nth-child(5){
-//         color: #907bbb;
-//         &:hover{
-//             color: #907bbb8b;
-//         }
-//     }
-// }
-
-// .sidenav a:hover {
-// color: #f1f1f1;
-// }
 
 .sidenav .closebtn {
 position: absolute;
@@ -261,7 +218,8 @@ margin-right: 50px;
 .sidenav-icon-link {
     display: flex;
     flex-direction: row;
-    gap: 5px;
+    align-items: center;
+    gap: 15px;
     font-size: 25px;
     padding: 20px 10px 20px 20px;
     color: black;
@@ -277,4 +235,18 @@ margin-right: 50px;
 .sidenav-icon-link:hover {
     background-color: black;
     color: whitesmoke;
+}
+
+#navbar-side {
+    display: none;
+}
+
+@media (max-width: 765px) {
+    .nav-icon-removable {
+        display: none;
+    }
+
+    #navbar-side {
+        display: block;
+    }
 }

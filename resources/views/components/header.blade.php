@@ -7,7 +7,7 @@
 <div class="header">
     <div class="header-content-wrapper">
         <p id="header-title">{{ $title }}</p>
-        <button class="standard-button" style="padding: 20px;width: fit-content;z-index: 3;margin-left:40px;height: 52px;">
+        <button class="standard-button" id="header-button">
             <a style="padding: 0%;" href="#tag-list">Encuentra nuestros productos</a>
         </button>
     </div>

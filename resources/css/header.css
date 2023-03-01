@@ -46,3 +46,18 @@
   padding-left: 40px;
   font-weight: 900;
 }
+#header-button {
+  padding: 20px;
+  width: fit-content;
+  z-index: 3;
+  margin-left: 40px;
+  height: 52px;
+}
+@media (max-width: 440px) {
+  #header-button {
+    margin-left: 0;
+    border-left: none;
+    border-right: none;
+    width: 100%;
+  }
+}

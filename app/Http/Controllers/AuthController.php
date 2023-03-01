@@ -99,20 +99,20 @@ class AuthController extends Controller
 
         $msg=$req->input('Mensaje');
 
- if ((empty($co)) || (empty($sub)) ) {
-    
-    return redirect('/enviarEmail?mal=va');
- } else {
-    
-    //CORREO PARA TODOS LOS USUARIOS
-if ($co=="Todos los usuarios") {
-    $correos = User::select('email')->get();
+        if ((empty($co)) || (empty($sub)) ) {
+            
+            return redirect('/enviarEmail?mal=va');
+        } else {
+            
+            //CORREO PARA TODOS LOS USUARIOS
+        if ($co=="Todos los usuarios") {
+            $correos = User::select('email')->get();
   
   
   
   
   
-    $datos=array('msg'=>$msg);
+            $datos=array('msg'=>$msg);
   
 
     

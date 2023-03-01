@@ -33,6 +33,10 @@ Route::get('/enviarEmail', [AuthController::class, 'enviarEmail'])->name('enviar
 Route::post('/FuncionMail',[AuthController::class,'FuncionMail'])->name('FuncionMail');
 Route::post('/listarCorreos',[AuthController::class,'listarCorreos'])->name('listarCorreos');
 
+// Payment through PAYPAL
+Route::post('/products/pay', [ProductController::class, 'pagar'])->name('product.pay');
+Route::get('/products/afterpurchase', [ProductController::class, 'afterPurchase'])->name('product.bought');
+
 // Products
 Route::post('/products/show', [ProductController::class, 'show'])->name('product.show');
 Route::get('/products/create', [ProductController::class, 'create'])->name('product.create');
@@ -51,7 +55,3 @@ Route::delete('/reviews/destroy/{review}', [ReviewController::class, 'destroy'])
 Route::get('/cart', [ShoppingCartController::class, 'show'])->name('cart.show');
 Route::post('/cart/store/{product}', [ShoppingCartController::class, 'store'])->name('cart.store');
 Route::delete('/cart/destroy/{product}', [ShoppingCartController::class, 'destroy'])->name('cart.destroy');
-
-// Pagos por PAYPAL
-Route::post('/products/pay', [ProductController::class, 'pagar'])->name('product.pay');
-Route::get('/comprado/{correo}', [ProductController::class, 'comprado'])->name('product.bought');

@@ -296,23 +296,31 @@ class ProductController extends Controller
 
         //ELIMINAR PRODUCTOS DEL CARRITO COMPRADOS
         foreach ($ids as $id) {
-            ShoppingCart::where([
-                'user_id'=>auth()->user()->id,
-                'product_id'=>$id
-            ])->first()->delete();
+            try {
+                ShoppingCart::where([
+                    'user_id'=>auth()->user()->id,
+                    'product_id'=>$id
+                ])->first()->delete();
+            } catch (\Throwable $th) {
+                continue;
+            }
         }
        
        //Insert en la tabla de factura
         // factura::create([]);
 
         //Mensaje: enviar los productos que se han comprado
-        $msg="";
-        $datos=array('msg'=>$msg);
-
-        //ENVIAMOS CORREO
-        $enviar= new EnviarCorreo($datos, $factura);
-        $enviar->sub=$sub;
-        Mail::to($correo)->send($enviar);
+        try {
+            $msg="";
+            $datos=array('msg'=>$msg);
+    
+            //ENVIAMOS CORREO
+            $enviar= new EnviarCorreo($datos, $factura);
+            $enviar->sub=$sub;
+            Mail::to($correo)->send($enviar);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
       
         // REDIRIGIMOS A LA VIEW DE COMPRA FINALIZADA
         return view('cart.afterPurchase');

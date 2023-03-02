@@ -1,3 +1,7 @@
+html{
+    scroll-behavior: smooth;
+}
+
 .product-showcase-wrapper {
     width: 100%;
     display: flex;
@@ -8,7 +12,7 @@
 .product-showcase {
     width: 100%;
 
-    min-height: 80vh;
+    min-height: 50vh;
 
     display: grid;
     gap: 1rem;
@@ -17,15 +21,17 @@
 }
 
 .showcase-message {
-    margin-left: 60px;
-    padding-left: 36px;
-    height: 37px;
+    padding: 0px 100px;
+    @media(max-width: 600px){
+        padding: 0px 35px;
+    }
     display: flex;
     align-items: center;
-    border-left: solid 2px #9f9f9f;
 
     .message {
-        font-size: 20px;
+        font-size: 15px;
+        border-left: solid 2px #9f9f9f;
+        padding-left: 30px;
     }
 }
 
@@ -60,4 +66,10 @@
 .product-card:hover {
     cursor: pointer;
     border-color: black;
+}
+
+#tag-list{
+    position: absolute;
+    top: 500px;
+    width: 100%;
 }

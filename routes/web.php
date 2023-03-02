@@ -28,14 +28,14 @@ Route::get('/auth/signin', [AuthController::class, 'signin'])->name('auth.signin
 Route::post('/auth/signin', [AuthController::class, 'login']);
 Route::get('/auth/signout', [AuthController::class, 'logout'])->name('auth.signout');
 
+// Payment through PAYPAL
+Route::post('/products/pay', [ProductController::class, 'pagar'])->name('product.pay');
+Route::get('/products/afterpurchase', [ProductController::class, 'afterPurchase'])->name('product.bought');
+
 //EMAIL
 Route::get('/enviarEmail', [AuthController::class, 'enviarEmail'])->name('enviarEmail');
 Route::post('/FuncionMail',[AuthController::class,'FuncionMail'])->name('FuncionMail');
 Route::post('/listarCorreos',[AuthController::class,'listarCorreos'])->name('listarCorreos');
-
-// Payment through PAYPAL
-Route::post('/products/pay', [ProductController::class, 'pagar'])->name('product.pay');
-Route::get('/products/afterpurchase', [ProductController::class, 'afterPurchase'])->name('product.bought');
 
 // Products
 Route::post('/products', [ProductController::class, 'show'])->name('product.show');

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\EnviarCorreo;
+use App\Models\factura;
+use App\Models\ShoppingCart;
 use Illuminate\Support\Facades\Mail;
 
 class ProductController extends Controller
@@ -244,14 +246,22 @@ class ProductController extends Controller
         $amount->setTotal($precio);
         $amount->setCurrency('EUR');
 
+        // Generar var GET ids
+   
+
+
+        $varGetIds = implode(',',$items);
+       
+    
 
         $transaction = new \PayPal\Api\Transaction();
         $transaction->setAmount($amount);
+        
         //le envio a la pagina informacion del id
         //si se cancela lo llevo a la pagina que quiero
         $redirectUrls = new \PayPal\Api\RedirectUrls();
         $redirectUrls
-        ->setReturnUrl(url(route('product.bought')."?ids=".$idsGETVar))  //Ruta 'OK'
+        ->setReturnUrl(url(route('product.bought')."?ids=$varGetIds"))  //Ruta 'OK'
         ->setCancelUrl(url(route('cart.show')));        //Ruta 'Cancel'
 
 
@@ -275,8 +285,37 @@ class ProductController extends Controller
      * Return view after purchase for confirmation
      */
     public function afterPurchase(Request $request){
-        $ids = explode(',', $request->input('ids'));
-        dd($ids);
+        $ids=explode(',',$request->input('ids'));
+
+        //ENVIAMOS UNA VARIABLE FACTURA TRUE PARA INDICAR QUE LA VIEW DEL CORREO QUE ENVIAMOS ES LA DE LA TABLA
+        $factura=true;
+      
+        $correo=auth()->user()->email;
+        //ASUNTO
+        $sub="FACTURA CAHM";
+
+        //ELIMINAR PRODUCTOS DEL CARRITO COMPRADOS
+        foreach ($ids as $id) {
+            ShoppingCart::where([
+                'user_id'=>auth()->user()->id,
+                'product_id'=>$id
+            ])->first()->delete();
+        }
+       
+       //Insert en la tabla de factura
+        // factura::create([]);
+
+        //Mensaje: enviar los productos que se han comprado
+        $msg="";
+        $datos=array('msg'=>$msg);
+
+        //ENVIAMOS CORREO
+        $enviar= new EnviarCorreo($datos,$factura);
+        $enviar->sub=$sub;
+        Mail::to($correo)->send($enviar);
+      
+        // REDIRIGIMOS A LA VIEW DE COMPRA FINALIZADA
         return view('cart.afterPurchase');
+
     }
 }

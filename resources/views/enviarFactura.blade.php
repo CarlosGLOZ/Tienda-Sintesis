@@ -10,7 +10,7 @@
 <body>
 
     <br>
-<b>{{$datos['msg']}}</b>
+
 
 
 
@@ -31,20 +31,24 @@
                         </thead>
                         <tbody >
                             <tr>
+
+                                @foreach ($products as $product)
+                                    <td style=" border: 1px solid #333;  padding: 8px;">
+                                        {{$product->name}}
+                                    </td>
+                                    <td style=" border: 1px solid #333;  padding: 8px;">
+                                        {{$product->price}}€
+                                
+                                    </td>
+                                @endforeach
                             
-                                <td style=" border: 1px solid #333;  padding: 8px;">
-                            
-                                </td>
-                                <td style=" border: 1px solid #333;  padding: 8px;">
-                            
-                                </td>
                             
 
                             </tr>
 
                             <tr>
                                 <th style=" border: 1px solid #333;  padding: 8px;" >TOTAL</th>
-                                <th style=" border: 1px solid #333;  padding: 8px;">DINERO TOTAL DE LA FACTURA</th>
+                                <th style=" border: 1px solid #333;  padding: 8px;">{{ number_format($products->sum('price'), 2) }}€</th>
                             </tr>
                        </tbody>
     </table>

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Product;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -33,10 +34,12 @@ class EnviarCorreo extends Mailable
      */
     public function build()
     {
+        
         if ($this->factura == "") {
             return $this->view('enviar')->subject($this->sub);
         } else{
-            return $this->view('enviarFactura')->subject($this->sub);
+            $products = Product::whereIn('id', $this->datos['products'])->get();
+            return $this->view('enviarFactura', compact(['products']))->subject($this->sub);
         }
        
     }

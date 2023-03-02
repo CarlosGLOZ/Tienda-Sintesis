@@ -291,6 +291,7 @@ class ProductController extends Controller
         $factura=true;
       
         $correo=auth()->user()->email;
+        
         //ASUNTO
         $sub="FACTURA CAHM";
 
@@ -305,25 +306,21 @@ class ProductController extends Controller
                 continue;
             }
         }
-       
-       //Insert en la tabla de factura
-        // factura::create([]);
 
         //Mensaje: enviar los productos que se han comprado
         try {
-            $msg="";
-            $datos=array('msg'=>$msg);
-    
+            $datos=array('products'=>$ids);
+            
             //ENVIAMOS CORREO
-            $enviar= new EnviarCorreo($datos, $factura);
+            $enviar= new EnviarCorreo($datos,$factura);
             $enviar->sub=$sub;
             Mail::to($correo)->send($enviar);
+          
         } catch (\Throwable $th) {
-            //throw $th;
+            // dd($th);
         }
-      
+        
         // REDIRIGIMOS A LA VIEW DE COMPRA FINALIZADA
         return view('cart.afterPurchase');
-
     }
 }

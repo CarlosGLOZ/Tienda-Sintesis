@@ -310,7 +310,7 @@ class ProductController extends Controller
         $datos=array('msg'=>$msg);
 
         //ENVIAMOS CORREO
-        $enviar= new EnviarCorreo($datos,$factura);
+        $enviar= new EnviarCorreo($datos, $factura);
         $enviar->sub=$sub;
         Mail::to($correo)->send($enviar);
       

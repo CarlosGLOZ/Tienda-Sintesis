@@ -19,10 +19,10 @@ class EnviarCorreo extends Mailable
      *
      * @return void
      */
-    public function __construct($datos,$factura)
+    public function __construct($datos, $factura)
     {
         $this->datos = $datos;
-        $this->factura =$factura;
+        $this->factura = $factura;
         
     }
 

@@ -296,23 +296,19 @@ class ProductController extends Controller
         $sub="FACTURA CAHM";
 
         //ELIMINAR PRODUCTOS DEL CARRITO COMPRADOS
-        // foreach ($ids as $id) {
-        //     try {
-        //         ShoppingCart::where([
-        //             'user_id'=>auth()->user()->id,
-        //             'product_id'=>$id
-        //         ])->first()->delete();
-        //     } catch (\Throwable $th) {
-        //         //throw $th;
-        //     }
-        // }
-       
-       //Insert en la tabla de factura
-        // factura::create([]);
+        foreach ($ids as $id) {
+            try {
+                ShoppingCart::where([
+                    'user_id'=>auth()->user()->id,
+                    'product_id'=>$id
+                ])->first()->delete();
+            } catch (\Throwable $th) {
+                continue;
+            }
+        }
 
-
+        //Mensaje: enviar los productos que se han comprado
         try {
-            //Mensaje: enviar los productos que se han comprado
             $datos=array('products'=>$ids);
             
             //ENVIAMOS CORREO

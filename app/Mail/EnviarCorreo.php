@@ -13,15 +13,17 @@ class EnviarCorreo extends Mailable
 
     public $datos;
     public $sub;
+    public $factura;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($datos)
+    public function __construct($datos,$factura)
     {
         $this->datos = $datos;
-        //
+        $this->factura =$factura;
+        
     }
 
     /**
@@ -31,6 +33,11 @@ class EnviarCorreo extends Mailable
      */
     public function build()
     {
-        return $this->view('enviar')->subject($this->sub);
+        if ($this->factura == "") {
+            return $this->view('enviar')->subject($this->sub);
+        } else{
+            return $this->view('enviarFactura')->subject($this->sub);
+        }
+       
     }
 }

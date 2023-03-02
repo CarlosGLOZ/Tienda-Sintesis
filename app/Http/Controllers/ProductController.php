@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\EnviarCorreo;
+use Illuminate\Support\Facades\Mail;
 
 class ProductController extends Controller
 {
@@ -242,6 +244,9 @@ class ProductController extends Controller
         //si se cancela lo llevo a la pagina que quiero
         $redirectUrls = new \PayPal\Api\RedirectUrls();
         $redirectUrls
+
+
+
         ->setReturnUrl(url("comprado/".$correo))  //Ruta 'OK'
         ->setCancelUrl(url("/cesta"));        //Ruta 'Cancel'
 
@@ -263,7 +268,16 @@ class ProductController extends Controller
     }
 
     public function comprado($correo, Request $request){
-        // return $correo;
-        dd($request);
+        $factura=true;
+        $co=$correo;
+        $sub="FACTURA CAHM";
+        $msg="HOla";
+
+        $datos=array('msg'=>$msg);
+
+        $enviar= new EnviarCorreo($datos,$factura);
+        $enviar->sub=$sub;
+        Mail::to($correo)->send($enviar);
+        // dd($request);
     }
 }

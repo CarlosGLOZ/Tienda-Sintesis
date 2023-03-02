@@ -53,6 +53,10 @@
   font-family: 'Poppins', sans-serif;
   font-size: 40px;
   margin: 0;
+  max-width: 370px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .cart-item-price {
   font-family: 'Poppins', sans-serif;

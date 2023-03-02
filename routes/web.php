@@ -38,7 +38,7 @@ Route::post('/FuncionMail',[AuthController::class,'FuncionMail'])->name('Funcion
 Route::post('/listarCorreos',[AuthController::class,'listarCorreos'])->name('listarCorreos');
 
 // Products
-Route::post('/products/show', [ProductController::class, 'show'])->name('product.show');
+Route::post('/products', [ProductController::class, 'show'])->name('product.show');
 Route::get('/products/create', [ProductController::class, 'create'])->name('product.create');
 Route::post('/products/edit', [ProductController::class, 'edit'])->name('product.edit');
 Route::get('/products/{id}', [ProductController::class, 'find'])->name('product.find');

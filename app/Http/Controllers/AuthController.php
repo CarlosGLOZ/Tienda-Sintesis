@@ -97,7 +97,9 @@ class AuthController extends Controller
 
         $sub=$req->input('Asunto');
 
-        $msg=$req->input('Mensaje');
+        $msg=$req->input('mensaje');
+
+        $factura="";
 
         if ((empty($co)) || (empty($sub)) ) {
             
@@ -109,39 +111,36 @@ class AuthController extends Controller
             $correos = User::select('email')->get();
   
   
-  
+ 
   
   
             $datos=array('msg'=>$msg);
   
 
-    
+   
 
 
     foreach ($correos as $correo) {
-        $enviar= new EnviarCorreo($datos);
+        $enviar= new EnviarCorreo($datos,$factura);
         $enviar->sub=$sub;
         Mail::to($correo)->send($enviar);
     }
   
-    return redirect('/enviarEmail');
+    return redirect('/enviarEmail?email=si');
     
   } else {
       //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
-      $correos=explode(',', $co);   
-  
-      $sub=$req->input('Asunto');
-  
-      $msg=$req->input('Mensaje');
+      $correos = explode(',', rtrim(trim($co), ','));
   
   
   
       $datos=array('msg'=>$msg);
   
-   
+    
       $formato=true;
 
       foreach ($correos as $correo) {
+       
         if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
             $formato=false;
          }
@@ -150,10 +149,12 @@ class AuthController extends Controller
         if ($formato==true) {
         
       foreach ($correos as $correo) {
-        $enviar= new EnviarCorreo($datos);
+       
+        $enviar= new EnviarCorreo($datos,$factura);
         $enviar->sub=$sub;
         Mail::to($correo)->send($enviar);
     }  
+    // dd($msg);
     return redirect('/enviarEmail?email=si');
         } else {
             return redirect('/enviarEmail?email=no');

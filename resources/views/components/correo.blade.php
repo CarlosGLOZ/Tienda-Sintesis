@@ -18,7 +18,7 @@
 
             <input type="text" id="asunto" name="Asunto" placeholder="Asunto" >
 
-            <textarea name="" id="mensaje" name="Mensaje" placeholder="Mensaje"></textarea>
+            <textarea  id="mensaje" name="mensaje" placeholder="Mensaje"></textarea>
 
             <input type="submit" value="ENVIAR CORREO" id="enviar" class="enviar">
             <input type="reset" id="reiniciar" value="Borrar">

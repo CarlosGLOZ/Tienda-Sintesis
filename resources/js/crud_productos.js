@@ -5,6 +5,8 @@ const productForm = document.getElementById('product-form');
 const submitFormButton = document.getElementById('submit-form-button');
 const resetFormButton = document.getElementById('reset-form-button');
 const editRedirectForm = document.getElementById('edit-redirect-form');
+const productImageLabel = document.getElementById('product-image-label');
+const productImageInput = document.getElementById('img');
 
 function listar() {
 
@@ -128,16 +130,37 @@ function submitProductForm() {
                 background: 'white',
                 showConfirmButton: false,
                 timerProgressBar: true,
-                timer: 3500
+                timer: 3500,
             });
 
-            listar()
+            // Will fail if on edit page
+            try {
+                listar()
+            } catch (error) {
+
+            }
+
+            // Update background image
+
+            // Set background image to default
+            let originalProductImagePath = productImageLabel.style.backgroundImage
+            productImagePath = originalProductImagePath.split('"')[1].split('/');
+            let productImageFileName = productImagePath.pop();
+
+            // // Set background image to original one (with a small timer to let the server update the image?)
+            newProductImagePath = productImagePath.join('/') + '/' + productImageFileName;
+            productImageLabel.style.backgroundImage = "url(" + newProductImagePath + '?x=' + Math.random() + ")";
+
         } else {
             console.error(ajax.status + ': ' + ajax.statusText);
         }
     }
 
     ajax.send(formdata);
+}
+
+function changeProductImageOnInput() {
+
 }
 
 function resetForm(form) {
@@ -155,6 +178,8 @@ function resetForm(form) {
             inputs[i].value = '';
         }
     }
+
+    productImageLabel.style.backgroundImage = 'url(' + productImageLabel.dataset.default+')';
 }
 
 function redirectToEdit(id) {
@@ -178,6 +203,17 @@ resetFormButton.addEventListener("click", (e) => {
 
     resetForm(productForm);
 })
+
+productImageInput.addEventListener('input', (e) => {
+    let temporaryProductImage = productImageInput.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', function() {
+        productImageLabel.style.backgroundImage = 'url(' + reader.result + ')';
+    })
+
+    reader.readAsDataURL(temporaryProductImage);
+});
 
 // Try to show table, will fail if on editing page
 try {

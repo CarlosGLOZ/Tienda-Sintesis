@@ -33,12 +33,8 @@ Route::get('/enviarEmail', [AuthController::class, 'enviarEmail'])->name('enviar
 Route::post('/FuncionMail',[AuthController::class,'FuncionMail'])->name('FuncionMail');
 Route::post('/listarCorreos',[AuthController::class,'listarCorreos'])->name('listarCorreos');
 
-// Payment through PAYPAL
-Route::post('/products/pay', [ProductController::class, 'pagar'])->name('product.pay');
-Route::get('/products/afterpurchase', [ProductController::class, 'afterPurchase'])->name('product.bought');
-
 // Products
-Route::post('/products/show', [ProductController::class, 'show'])->name('product.show');
+Route::post('/products', [ProductController::class, 'show'])->name('product.show');
 Route::get('/products/create', [ProductController::class, 'create'])->name('product.create');
 Route::post('/products/edit', [ProductController::class, 'edit'])->name('product.edit');
 Route::get('/products/{id}', [ProductController::class, 'find'])->name('product.find');
@@ -46,6 +42,10 @@ Route::post('/products/table',[ProductController::class, 'table'])->name('produc
 Route::delete('/products/destroy',[ProductController::class, 'destroy'])->name('product.destroy');
 Route::post('/products/store',[ProductController::class, 'store'])->name('product.store');
 Route::put('/products/update',[ProductController::class, 'update'])->name('product.update');
+
+// Payment through PAYPAL
+Route::post('/products/pay', [ProductController::class, 'pagar'])->name('product.pay');
+Route::get('/products/afterpurchase/{ids}', [ProductController::class, 'afterPurchase'])->name('product.bought');
 
 // Reviews
 Route::post('/reviews/store/{product}', [ReviewController::class, 'store'])->name('review.store');

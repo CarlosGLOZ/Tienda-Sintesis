@@ -156,6 +156,7 @@ class ProductController extends Controller
      */
     public function update(Request $request){
 
+        
         // Use Validator class to avoid automatic response by laravel
         $validation = Validator::make(
             $request->all(),
@@ -170,19 +171,18 @@ class ProductController extends Controller
         if ($validation->stopOnFirstFailure()->fails()) {
             return ['status' => 'NOT OK', 'message' => $validation->errors()->first(), 'icon' => 'error'];
         }
-
+        
         $id = $request->input('id');
-
+        
         $product=Product::find($id);
-
+        
         $product_data = $request->except('_token', '_method', 'id', 'img');
-
+        
         try {
             // Change image
             $existingImagePath = public_path("storage/images/products/prod_".$id.".png");
             
             $file=$request->file('img');
-
             
             if ($file != null){            
                 // Delete current image if exists
@@ -190,10 +190,10 @@ class ProductController extends Controller
                 if (file_exists($existingImagePath)) {
                     File::delete($existingImagePath);
                 }
-
+                
                 $file->move(public_path("storage\images\products"), "\prod_".$id.".png");
             } 
-
+            
             $product->update($product_data);
         } catch (\Throwable $th) {
             return ['status' => 'OK', 'message' => $th->getMessage(), 'icon' => 'error'];
@@ -221,8 +221,9 @@ class ProductController extends Controller
 
             $precio += $product->price;
 
-            // Save products for receipt 
         }
+
+        $idsGETVar = implode(',', $items);
 
         $correo = auth()->user()->email;
 
@@ -250,7 +251,7 @@ class ProductController extends Controller
         //si se cancela lo llevo a la pagina que quiero
         $redirectUrls = new \PayPal\Api\RedirectUrls();
         $redirectUrls
-        ->setReturnUrl(url(route('product.bought')))  //Ruta 'OK'
+        ->setReturnUrl(url(route('product.bought')."?ids=".$idsGETVar))  //Ruta 'OK'
         ->setCancelUrl(url(route('cart.show')));        //Ruta 'Cancel'
 
 
@@ -274,6 +275,8 @@ class ProductController extends Controller
      * Return view after purchase for confirmation
      */
     public function afterPurchase(Request $request){
+        $ids = explode(',', $request->input('ids'));
+        dd($ids);
         return view('cart.afterPurchase');
     }
 }

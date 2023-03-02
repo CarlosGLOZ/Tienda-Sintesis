@@ -218,7 +218,10 @@ class ProductController extends Controller
             }
 
             $precio += $product->price;
+
         }
+
+        $idsGETVar = implode(',', $items);
 
         $correo = auth()->user()->email;
 
@@ -246,7 +249,7 @@ class ProductController extends Controller
         //si se cancela lo llevo a la pagina que quiero
         $redirectUrls = new \PayPal\Api\RedirectUrls();
         $redirectUrls
-        ->setReturnUrl(url(route('product.bought', $items)))  //Ruta 'OK'
+        ->setReturnUrl(url(route('product.bought')."?ids=".$idsGETVar))  //Ruta 'OK'
         ->setCancelUrl(url(route('cart.show')));        //Ruta 'Cancel'
 
 
@@ -269,7 +272,8 @@ class ProductController extends Controller
     /**
      * Return view after purchase for confirmation
      */
-    public function afterPurchase(Request $request, $ids){
+    public function afterPurchase(Request $request){
+        $ids = explode(',', $request->input('ids'));
         dd($ids);
         return view('cart.afterPurchase');
     }

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+<link rel="stylesheet" href="{{ asset('../resources/css/productos.css') }}">
 
 @push('head')
     <script src="{{asset('../resources/js/crud_productos.js')}}" defer></script>
@@ -8,9 +9,21 @@
 @endpush
 
 @section('content')
+<<<<<<< HEAD
     {{-- If a product is passed, show the edit form, else, show the create form --}}
     @if (isset($product))
         <form action="{{ route('product.update') }}" method="post" id="product-form" enctype="multipart/form-data">
+=======
+    <div>
+        
+    </div>
+    {{-- If a product is passed, show the edit form, else, show the create form --}}
+    @if (isset($product))
+        <button class="standard-button"><a href="{{ route('product.find', $product->id) }}">Product page</a></button>
+        <div class="cajaproductos">
+
+        <form action="{{ route('product.update') }}" method="post" id="product-form" enctype="multipart/form-data" class="formularioproductos">
+>>>>>>> 710cdfc1220c8d0be950d3e5261d3f76a539def6
             @csrf
             @method('PUT')
             <input type="hidden" name="id" id="id" value="{{ $product->id }}">
@@ -45,9 +58,13 @@
             </div>
         </form>
         </form>
+        </div>
     @else
-        <form action="{{ route('product.store') }}" method="post" id="product-form" enctype="multipart/form-data">
+    <div class="cajaproductos">
+
+        <form action="{{ route('product.store') }}" method="post" id="product-form" enctype="multipart/form-data" class="formularioproductos">
             @csrf
+<<<<<<< HEAD
 
             {{-- Copy the style of the product page --}}
             <div id="product-main">
@@ -78,10 +95,24 @@
                     </div>
                 </div>
             </div>
+=======
+            Nombre
+            <input type="text" name="name" id="nombre">
+            Descripcion
+            <textarea type="text" id="descripcion" name="description"></textarea>
+            Precio
+            <input type="text" id="precio" name="price">
+            <br>
+            Imagen 
+            <input type="file" name="img" id="img">
+            <br>
+            <button type="submit" id="submit-form-button"  class="standard-button prueba">Create</button>
+            <button type="reset" id="reset-form-button"  class="standard-button-dark prueba">Reset</button>
+>>>>>>> 710cdfc1220c8d0be950d3e5261d3f76a539def6
         </form>
     
 
-        <div>
+        <div class="caja">
             <form action="{{ route('product.table') }}" method="post" id="table-filters-form"></form>
             <form action="{{ route('product.destroy') }}" method="post" id="table-destroy-form"></form>
             <form action="{{ route('product.edit') }}" method="post" id="edit-redirect-form">@csrf</form>
@@ -104,6 +135,7 @@
                 </tbody>
             </table>
         </div>
+    </div>
 
     @endif
 

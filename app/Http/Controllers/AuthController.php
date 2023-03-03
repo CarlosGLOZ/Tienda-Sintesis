@@ -105,7 +105,7 @@ class AuthController extends Controller
  } else {
     
     //CORREO PARA TODOS LOS USUARIOS
-if ($co=="Todos los usuarios") {
+if ($co=="All the users") {
     $correos = User::select('email')->get();
   
   
@@ -128,7 +128,7 @@ if ($co=="Todos los usuarios") {
     
   } else {
       //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
-      $correos=explode(',', $co);   
+      $correos = explode(',', $co);   
   
       $sub=$req->input('Asunto');
   
@@ -148,20 +148,17 @@ if ($co=="Todos los usuarios") {
       }
 
         if ($formato==true) {
-        
-      foreach ($correos as $correo) {
-        $enviar= new EnviarCorreo($datos);
-        $enviar->sub=$sub;
-        Mail::to($correo)->send($enviar);
-    }  
-    return redirect('/enviarEmail?email=si');
+            foreach ($correos as $correo) {
+                $enviar= new EnviarCorreo($datos);
+                $enviar->sub=$sub;
+                Mail::to($correo)->send($enviar);
+            }  
+            return redirect('/enviarEmail?email=si');
         } else {
             return redirect('/enviarEmail?email=no');
         }
 
-  
-  
-}
+    }
  }
 
 
@@ -181,7 +178,7 @@ public function listarCorreos(Request $req){
     /* echo $buscador; */
     /* echo $buscador['buscar']; */
     /* dd($request); */
-    $consulta=User::where('email', 'like', '%'.$buscador['buscar'].'%')->get();
+    $consulta=User::where('email', 'like', ''.$buscador['buscar'].'%')->get();
     /* $count = $consulta->count(); */
     return response()->json($consulta);
 

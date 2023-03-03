@@ -1,33 +1,29 @@
-
-
-
-
+@push('head')
+    <link rel="stylesheet" href="{{ asset('../resources/css/correo.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+@endpush
 
 <div class="caja">
-    <div class="formmail">
-       
-        <form action="{{ url('/FuncionMail') }}" method="post">
-            <ion-icon name="mail-outline"></ion-icon>
-            <h1>ENVIAR MAIL</h1>
-            <input type="button" class="nav-button" id="todos" value="Todos">
-            
-            @csrf
-            {{-- <input type="text" id="destinatario" name="Destinatario" placeholder="Destinatario"> --}}
-
-            <textarea class="correos" id="destinatario" name="Destinatario" placeholder="Destinatario"></textarea>
-
-            <input type="text" id="asunto" name="Asunto" placeholder="Asunto" >
-
-            <textarea name="" id="mensaje" name="Mensaje" placeholder="Mensaje"></textarea>
-
-            <input type="submit" value="ENVIAR CORREO" id="enviar" class="enviar">
-            <input type="reset" id="reiniciar" value="Borrar">
-        </form>
-
-        <div id="listarbuscador" name="listarbuscador" >
-
+    <form action="{{ url('/FuncionMail') }}" method="post">
+        <h1>EMAIL FORM</h1>
+        <div class="divs">
+            <input type="button" class="standard-button" id="todos" value="All">
+            <input type="button" class="standard-button" id="escoger" value="Choose">
         </div>
-    </div>
+    
+        @csrf
+        {{-- <input type="text" id="destinatario" name="Destinatario" placeholder="Destinatario"> --}}
+
+        <input class="correos" id="destinatario" name="Destinatario" placeholder="Addressee">
+        <div style="display: none;" id="listarbuscador" name="listarbuscador" ></div> {{-- BUSCADOR USUARIOS --}}
+
+        <input type="text" id="asunto" name="Asunto" placeholder="Affair" >
+
+        <textarea name="" id="mensaje" name="Mensaje" placeholder="Message"></textarea>
+
+        <input style="width: 207px;" type="submit" value="Send email" id="enviar" class="enviar standard-button-dark">
+        <input type="reset" id="reiniciar" value="Reset" class="standard-button">
+    </form>
 </div>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

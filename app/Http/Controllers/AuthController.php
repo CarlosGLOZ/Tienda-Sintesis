@@ -135,10 +135,14 @@ class AuthController extends Controller
             Mail::to($correo)->send($enviar);
         }
   
-    return redirect('/enviarEmail?email=si');
+    // return redirect('/enviarEmail?email=si');
+    return back()->with('alert', [
+        'type' => 'success',
+        'title' => 'EMAIL SENT SUCCESSFULLY',
+    ]);
     //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
   } else {
-    
+
     // RECOGEMOS LOS CORREOS ENVIADOS 
       $destinatarios=$req->input('Destinatario');
         
@@ -163,7 +167,11 @@ class AuthController extends Controller
         $enviar->sub=$sub;
         Mail::to($correo)->send($enviar);
     }  
-    return redirect('/enviarEmail?email=si');
+    // return redirect('/enviarEmail?email=si');
+    return back()->with('alert', [
+        'type' => 'success',
+        'title' => 'EMAIL SENT SUCCESSFULLY',
+    ]);
         } else {
             return redirect('/enviarEmail?email=no');
         }

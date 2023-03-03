@@ -36,28 +36,21 @@
 
 
 {{-- TODO CORRECTO --}}
-<?php
-if (isset($_GET['email'])) {
-if ($_GET['email']=='si') {
-    ?>
+
+
+@if (session('alert'))
     <script>
- Swal.fire({
-                            icon: 'success',
-                            title: 'EMAIL SENT SUCCESSFULLY',
-                            showConfirmButton: false,
-                            color: 'white',
-                            timerProgressBar: true,
-
-                            timer: 2000
-                        })
-
+        Swal.fire({
+            icon: '{{ session('alert.type') }}',
+            title: '{{ session('alert.title') }}',
+            showConfirmButton: false,
+            color: 'white',
+            timerProgressBar: true,
+            timer: 2000
+           
+        });
     </script>
-    <?php
-}
-}
-
-?>
-
+@endif
 
 
 {{-- CAMPOS VACIOS --}}
@@ -76,6 +69,8 @@ if ($_GET['email']=='si') {
 
     </script>
 @enderror
+
+{{-- ERROR EN MAILS --}}
 
 @error('email')    
     <script>

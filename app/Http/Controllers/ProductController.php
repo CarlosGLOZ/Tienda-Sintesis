@@ -325,7 +325,8 @@ class ProductController extends Controller
         //ASUNTO
         $sub="FACTURA CAHM";
 
-        //ELIMINAR PRODUCTOS DEL CARRITO COMPRADOS
+        // ELIMINAR PRODUCTOS DEL CARRITO COMPRADOS
+
         foreach ($ids as $id) {
             try {
                 ShoppingCart::where([

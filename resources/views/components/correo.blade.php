@@ -47,9 +47,8 @@ if ($_GET['email']=='si') {
     <script>
  Swal.fire({
                             icon: 'success',
-                            title: 'Correo enviado correctamente',
+                            title: 'EMAIL SENT SUCCESSFULLY',
                             showConfirmButton: false,
-                            background: '#17263D',
                             color: 'white',
                             timerProgressBar: true,
 
@@ -75,9 +74,8 @@ if ($_GET['mal']=='va') {
     <script>
  Swal.fire({
                             icon: 'error',
-                            title: 'Campos vacíos',
+                            title: 'Something is empty',
                             showConfirmButton: false,
-                            background: '#17263D',
                             color: 'white',
                             timerProgressBar: true,
 
@@ -103,9 +101,8 @@ if ($_GET['email']=='no') {
  Swal.fire({
                             icon: 'error',
                             title: 'UPS',
-                            text:'Formato incorrecto',
+                            text:'Something is wrong',
                             showConfirmButton: false,
-                            background: '#17263D',
                             color: 'white',
                             timerProgressBar: true,
 

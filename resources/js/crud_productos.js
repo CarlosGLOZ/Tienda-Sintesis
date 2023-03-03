@@ -64,13 +64,12 @@ function listar() {
 
 function destroyProduct(id) {
     Swal.fire({
-        title: '¿Quiere eliminar este producto?',
+        title: 'Do you want to delete this product?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3894a3',
         cancelButtonColor: '#2f414F',
         confirmButtonText: 'Si',
-        background: 'black',
         color: 'white',
         cancelButtonText: 'Cancelar'
     }).then((result) => {

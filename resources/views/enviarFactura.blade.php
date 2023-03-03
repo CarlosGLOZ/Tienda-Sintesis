@@ -18,7 +18,7 @@
     <div><h1> FICHA DE LA FACTURA  <img style="width: 30px;height:30px" src="https://canyengues.files.wordpress.com/2019/05/ficha-png.png" alt=""> </h1></div>
     
 
-    <table style="border-collapse: collapse;background-color:#c7d0d8;"  >
+    <table style="border-collapse: collapse;background-color:#c7d0d8;">
                         <thead >
                             <tr>
                                
@@ -30,9 +30,10 @@
                             </tr>
                         </thead>
                         <tbody >
-                            <tr>
+                           
 
                                 @foreach ($products as $product)
+                                <tr>
                                     <td style=" border: 1px solid #333;  padding: 8px;">
                                         {{$product->name}}
                                     </td>
@@ -40,11 +41,12 @@
                                         {{$product->price}}€
                                 
                                     </td>
+                                </tr>
                                 @endforeach
                             
                             
 
-                            </tr>
+                            
 
                             <tr>
                                 <th style=" border: 1px solid #333;  padding: 8px;" >TOTAL</th>

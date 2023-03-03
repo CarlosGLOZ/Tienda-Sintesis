@@ -1,10 +1,10 @@
 @extends('layouts.app')
-<link rel="stylesheet" href="{{ asset('../resources/css/productos.css') }}">
 
 @push('head')
     <script src="{{asset('../resources/js/crud_productos.js')}}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10" defer></script>
     <link rel="stylesheet" href="{{ asset('../resources/css/product.css') }}">
+    <link rel="stylesheet" href="{{ asset('../resources/css/product_table.css') }}">
     <link rel="stylesheet" href="{{ asset('../resources/css/crud.css') }}">
 @endpush
 
@@ -46,11 +46,8 @@
             </div>
         </form>
         </form>
-        </div>
     @else
-    <div class="cajaproductos">
-
-        <form action="{{ route('product.store') }}" method="post" id="product-form" enctype="multipart/form-data" class="formularioproductos">
+        <form action="{{ route('product.store') }}" method="post" id="product-form" enctype="multipart/form-data">
             @csrf
 
             {{-- Copy the style of the product page --}}
@@ -85,7 +82,7 @@
         </form>
     
 
-        <div class="caja">
+        <div>
             <form action="{{ route('product.table') }}" method="post" id="table-filters-form"></form>
             <form action="{{ route('product.destroy') }}" method="post" id="table-destroy-form"></form>
             <form action="{{ route('product.edit') }}" method="post" id="edit-redirect-form">@csrf</form>
@@ -108,7 +105,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
 
     @endif
 

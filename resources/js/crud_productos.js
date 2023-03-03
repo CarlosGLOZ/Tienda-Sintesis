@@ -44,24 +44,34 @@ function listar() {
                             <td>
                                 <button type='button' class='standard-button-dark' onclick=destroyProduct('${element.id}')>Eliminar</button>
                             </td>
-                        </tr>`;
-=======
-                    <td>${element.id} </td>
-                    <td>${element.name} </td>
-                    <td>${element.description} </td>
-                    <td>${element.price} €</td>
-                    
-                   
-                    <td> <img style="width: 100px;height:100px" class='product-img' onclick=redirectToEdit(${element.id}) src="../storage/images/products/prod_${element.id}.png?x=${Math.random()}"> </td>
-                  
-                    <td>
-                        <button type='button' class='standard-button prueba' onclick=redirectToEdit(${element.id})>Editar</button>
-                    </td>
-                    <td>
-                        <button type='button' class='standard-button-dark prueba' onclick=destroyProduct('${element.id}')>Eliminar</button>
-                    </td>
-                </tr>`;
->>>>>>> 710cdfc1220c8d0be950d3e5261d3f76a539def6
+                        </tr>`; ===
+                        === = <
+                        td > $ { element.id } < /td> <
+                            td > $ { element.name } < /td> <
+                            td > $ { element.description } < /td> <
+                            td > $ { element.price }€ < /td>
+
+
+                        <
+                        td > < img style = "width: 100px;height:100px"
+                        class = 'product-img'
+                        onclick = redirectToEdit($ { element.id }) src = "../storage/images/products/prod_${element.id}.png?x=${Math.random()}" > < /td>
+
+                        <
+                        td >
+                            <
+                            button type = 'button'
+                        class = 'standard-button prueba'
+                        onclick = redirectToEdit($ { element.id }) > Editar < /button> <
+                            /td> <
+                            td >
+                            <
+                            button type = 'button'
+                        class = 'standard-button-dark prueba'
+                        onclick = destroyProduct('${element.id}') > Eliminar < /button> <
+                            /td> <
+                            /tr>`; >>>
+                            >>> > 710 cdfc1220c8d0be950d3e5261d3f76a539def6
 
 
 
@@ -81,12 +91,14 @@ function listar() {
 }
 
 function destroyProduct(id) {
-    Swal.fire({
-<<<<<<< HEAD
+    Swal.fire({ <<
+        << << < HEAD
         title: 'Do you want to delete this product?',
-=======
+        ===
+        === =
         title: '¿Quieres eliminar este producto?',
->>>>>>> 710cdfc1220c8d0be950d3e5261d3f76a539def6
+        >>>
+        >>> > 710 cdfc1220c8d0be950d3e5261d3f76a539def6
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3894a3',

@@ -8,7 +8,9 @@
 @endpush
 
 @section('content')
-
+    <div>
+        
+    </div>
     {{-- If a product is passed, show the edit form, else, show the create form --}}
     @if (isset($product))
         <button class="standard-button"><a href="{{ route('product.find', $product->id) }}">Product page</a></button>

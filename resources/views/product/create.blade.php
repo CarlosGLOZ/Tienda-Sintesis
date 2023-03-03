@@ -85,6 +85,7 @@
             <form action="{{ route('product.table') }}" method="post" id="table-filters-form"></form>
             <form action="{{ route('product.destroy') }}" method="post" id="table-destroy-form"></form>
             <form action="{{ route('product.edit') }}" method="post" id="edit-redirect-form">@csrf</form>
+            <form action="{{ route('product.find', '') }}" method="get" id="product-redirect-form"></form>
 
             <table>
                 <thead>

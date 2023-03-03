@@ -54,14 +54,23 @@ class ProductController extends Controller
      */
     public function create()
     {
+        // Validate that user is logged in and an admin
+        if (!Auth::check() || auth()->user()->admin != 1) {
+            return redirect()->route('home');
+        }
+
         return view('product.create');
     }
 
     /**
      * Return the products in a JSON format in order to be used to form a table
      */
-    public function table(Request $request){
-        $filtro=$request->except('_token');
+    public function table(Request $request)
+    {
+        // Validate that user is logged in and an admin
+        if (!Auth::check() || auth()->user()->admin != 1) {
+            return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
+        }
 
         $products=Product::get();
 
@@ -73,6 +82,11 @@ class ProductController extends Controller
      * Destroy an instance of the product and delete its image
      */
     public function destroy(Request $request){
+
+        // Validate that user is logged in and an admin
+        if (!Auth::check() || auth()->user()->admin != 1) {
+            return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
+        }
 
         $id = $request->input('id');
 
@@ -95,8 +109,8 @@ class ProductController extends Controller
     /**
      * Store a new instance of a product in the database and save the given image
      */
-    public function store(Request $request){
-
+    public function store(Request $request)
+    {
         // Validate that user is logged in and an admin
         if (!Auth::check() || auth()->user()->admin != 1) {
             return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
@@ -121,7 +135,7 @@ class ProductController extends Controller
         }
 
 
-        if ($filetype != 'png') {
+        if ($filetype != 'png' && $filetype != 'jpg' && $filetype != 'jpeg') {
             return ['status' => 'NOT OK', 'message' => 'Invalid File Type', 'icon' => 'error'];
         }
 
@@ -143,7 +157,7 @@ class ProductController extends Controller
     {
         // Validate that user is logged in and an admin
         if (!Auth::check() || auth()->user()->admin != 1) {
-            return back()->with(['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error']);
+            return redirect()->route('home')->with(['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error']);
         }
 
         $id = $request->input('id');
@@ -156,8 +170,13 @@ class ProductController extends Controller
     /**
      * Update a record in the DB
      */
-    public function update(Request $request){
+    public function update(Request $request)
+    {
 
+        // Validate that user is logged in and an admin
+        if (!Auth::check() || auth()->user()->admin != 1) {
+            return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
+        }
         
         // Use Validator class to avoid automatic response by laravel
         $validation = Validator::make(
@@ -209,6 +228,11 @@ class ProductController extends Controller
      * Perform a payment for the specified products
      */
     public function pagar(Request $request){
+
+        // Validate that user is logged in
+        if (!Auth::check()) {
+            return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
+        }
 
         // Validate items sent and add up price
         $precio = 0;
@@ -284,7 +308,13 @@ class ProductController extends Controller
     /**
      * Return view after purchase for confirmation
      */
-    public function afterPurchase(Request $request){
+    public function afterPurchase(Request $request)
+    {
+        // Validate that user is logged in
+        if (!Auth::check()) {
+            return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
+        }
+
         $ids=explode(',',$request->input('ids'));
 
         //ENVIAMOS UNA VARIABLE FACTURA TRUE PARA INDICAR QUE LA VIEW DEL CORREO QUE ENVIAMOS ES LA DE LA TABLA

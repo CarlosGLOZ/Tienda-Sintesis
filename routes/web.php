@@ -55,3 +55,6 @@ Route::delete('/reviews/destroy/{review}', [ReviewController::class, 'destroy'])
 Route::get('/cart', [ShoppingCartController::class, 'show'])->name('cart.show');
 Route::post('/cart/store/{product}', [ShoppingCartController::class, 'store'])->name('cart.store');
 Route::delete('/cart/destroy/{product}', [ShoppingCartController::class, 'destroy'])->name('cart.destroy');
+
+// Test
+// Route::get('/test', [ProductController::class, 'test'])->name('test');

@@ -5,6 +5,7 @@ const productForm = document.getElementById('product-form');
 const submitFormButton = document.getElementById('submit-form-button');
 const resetFormButton = document.getElementById('reset-form-button');
 const editRedirectForm = document.getElementById('edit-redirect-form');
+const productRedirectForm = document.getElementById('product-redirect-form');
 const productImageLabel = document.getElementById('product-image-label');
 const productImageInput = document.getElementById('img');
 
@@ -28,21 +29,21 @@ function listar() {
                 productos.forEach(element => {
 
                         box += `<tr >
-                    <td>${element.id} </td>
-                    <td>${element.name} </td>
-                    <td>${element.description} </td>
-                    <td>${element.price} €</td>
-                    
-                   
-                    <td> <img style="width: 100px;height:100px" class='product-img' onclick=redirectToEdit(${element.id}) src="../storage/images/products/prod_${element.id}.png?x=${Math.random()}"> </td>
-                  
-                    <td>
-                        <button type='button' class='standard-button' onclick=redirectToEdit(${element.id})>Editar</button>
-                    </td>
-                    <td>
-                        <button type='button' class='standard-button-dark' onclick=destroyProduct('${element.id}')>Eliminar</button>
-                    </td>
-                </tr>`;
+                            <td>${element.id} </td>
+                            <td>${element.name} </td>
+                            <td>${element.description} </td>
+                            <td>${element.price} €</td>
+                            
+                        
+                            <td> <img class='product-img' onclick=redirectToProduct(${element.id}) src="../storage/images/products/prod_${element.id}.png?x=${Math.random()}"> </td>
+                        
+                            <td>
+                                <button type='button' class='standard-button' onclick=redirectToEdit(${element.id})>Editar</button>
+                            </td>
+                            <td>
+                                <button type='button' class='standard-button-dark' onclick=destroyProduct('${element.id}')>Eliminar</button>
+                            </td>
+                        </tr>`;
 
 
 
@@ -158,10 +159,6 @@ function submitProductForm() {
     ajax.send(formdata);
 }
 
-function changeProductImageOnInput() {
-
-}
-
 function resetForm(form) {
     let inputs = form.getElementsByTagName('input');
     let textareas = form.getElementsByTagName('textarea');
@@ -190,6 +187,12 @@ function redirectToEdit(id) {
     editRedirectForm.appendChild(IDinput);
 
     editRedirectForm.submit();
+}
+
+function redirectToProduct(id) {
+    productRedirectForm.action = productRedirectForm.action + '/' + id
+
+    productRedirectForm.submit();
 }
 
 submitFormButton.addEventListener("click", (e) => {

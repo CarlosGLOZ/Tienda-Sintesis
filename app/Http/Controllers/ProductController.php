@@ -42,11 +42,22 @@ class ProductController extends Controller
      */
     public function find($productId)
     {
+        //DATOS DEL PRODUCTO CLICADO 
         $product = Product::with(['reviews' => function ($query) {
             $query->orderBy('created_at', 'desc');
         }, 'reviews.author'])->find($productId);
 
-        return view('product.view', compact(['product']));
+        // COMPROBAR QUE EXISTE EL PRODUCTO CLICADO
+        $existe = Product::where([
+            'id'=>$productId,
+        ])->count();
+
+        if ($existe==1) {
+            return view('product.view', compact(['product']));
+        } else {
+            abort('404');
+        }
+      
     }
 
     /**
@@ -294,6 +305,17 @@ class ProductController extends Controller
         
         //ASUNTO
         $sub="FACTURA CAHM";
+       
+         // CALCULAR EL PRECIO TOTAL FACTURA 
+        $precio_total=0;
+       
+        foreach ($ids as $id) {
+          $precio= Product::where([
+                'id'=>$id
+           ])->select('price')->first();
+           $precio_total=$precio+$precio_total;
+        }
+
 
         // ELIMINAR PRODUCTOS DEL CARRITO COMPRADOS
         foreach ($ids as $id) {

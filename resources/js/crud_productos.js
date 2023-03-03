@@ -8,6 +8,9 @@ const editRedirectForm = document.getElementById('edit-redirect-form');
 const productRedirectForm = document.getElementById('product-redirect-form');
 const productImageLabel = document.getElementById('product-image-label');
 const productImageInput = document.getElementById('img');
+const toggleTableButton = document.getElementById('toggle-table-button');
+const toggleTableButtonIcon = document.getElementById('toggle-table-button-icon');
+const productTable = document.getElementById('product-table');
 
 function listar() {
 
@@ -29,10 +32,8 @@ function listar() {
                 productos.forEach(element => {
 
                         box += `<tr >
-<<<<<<< HEAD
                             <td>${element.id} </td>
                             <td>${element.name} </td>
-                            <td>${element.description} </td>
                             <td>${element.price} €</td>
                             
                         
@@ -44,34 +45,7 @@ function listar() {
                             <td>
                                 <button type='button' class='standard-button-dark' onclick=destroyProduct('${element.id}')>Eliminar</button>
                             </td>
-                        </tr>`; ===
-                        === = <
-                        td > $ { element.id } < /td> <
-                            td > $ { element.name } < /td> <
-                            td > $ { element.description } < /td> <
-                            td > $ { element.price }€ < /td>
-
-
-                        <
-                        td > < img style = "width: 100px;height:100px"
-                        class = 'product-img'
-                        onclick = redirectToEdit($ { element.id }) src = "../storage/images/products/prod_${element.id}.png?x=${Math.random()}" > < /td>
-
-                        <
-                        td >
-                            <
-                            button type = 'button'
-                        class = 'standard-button prueba'
-                        onclick = redirectToEdit($ { element.id }) > Editar < /button> <
-                            /td> <
-                            td >
-                            <
-                            button type = 'button'
-                        class = 'standard-button-dark prueba'
-                        onclick = destroyProduct('${element.id}') > Eliminar < /button> <
-                            /td> <
-                            /tr>`; >>>
-                            >>> > 710 cdfc1220c8d0be950d3e5261d3f76a539def6
+                        </tr>`;
 
 
 
@@ -91,14 +65,8 @@ function listar() {
 }
 
 function destroyProduct(id) {
-    Swal.fire({ <<
-        << << < HEAD
+    Swal.fire({
         title: 'Do you want to delete this product?',
-        ===
-        === =
-        title: '¿Quieres eliminar este producto?',
-        >>>
-        >>> > 710 cdfc1220c8d0be950d3e5261d3f76a539def6
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3894a3',
@@ -228,6 +196,22 @@ function redirectToProduct(id) {
 
     productRedirectForm.submit();
 }
+
+function toggleTable() {
+    if (toggleTableButton.dataset.state == 'hidden') {
+        productTable.style.display = 'table'
+        toggleTableButton.dataset.state = 'shown'
+        toggleTableButtonIcon.classList.replace('fa-chevron-down', 'fa-chevron-up')
+    } else {
+        productTable.style.display = 'none'
+        toggleTableButton.dataset.state = 'hidden'
+        toggleTableButtonIcon.classList.replace('fa-chevron-up', 'fa-chevron-down')
+    }
+}
+
+toggleTableButton.addEventListener('click', (e) => {
+    toggleTable();
+});
 
 submitFormButton.addEventListener("click", (e) => {
     e.preventDefault();

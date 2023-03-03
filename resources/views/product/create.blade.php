@@ -88,16 +88,17 @@
             <form action="{{ route('product.edit') }}" method="post" id="edit-redirect-form">@csrf</form>
             <form action="{{ route('product.find', '') }}" method="get" id="product-redirect-form"></form>
 
-            <table>
+            <p id="toggle-table-button" data-state="hidden">Show table of contents <i class="fa-solid fa-chevron-down" id="toggle-table-button-icon"></i></p>
+
+            <table id="product-table">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
-                        <th>Descripcion</th>
                         <th>Precio</th>
                         <th>Imagen</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="resultado" class="animate__animated animate__fadeIn">

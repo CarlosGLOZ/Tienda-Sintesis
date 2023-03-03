@@ -5,10 +5,6 @@ destinatario.addEventListener("keyup", () => {
 
     var buscar = destinatario.value;
 
-
-
-
-
     var listarbuscador = document.getElementById("listarbuscador");
     var formdata = new FormData();
     formdata.append('_token', csrf_token);
@@ -40,7 +36,7 @@ destinatario.addEventListener("keyup", () => {
             if (productos.length == 0) {
                 box += `
                 <div class="element-busc">
-                    <p>No se ha encontrado ningun correo</p>
+                    <p>No match found...</p>
                 </div>`;
             } else {
 
@@ -49,9 +45,7 @@ destinatario.addEventListener("keyup", () => {
 
                     box += `
                         <div class="element-busc">
-                        <br>
                             <p name='p-buscador' class='p-buscador'>${element.email},</p>
-                            
                         </div>`;
                 });
             }
@@ -99,17 +93,19 @@ function ponerValueEnBuscador(evt) {
 
 
 
-todos.addEventListener("click", () => {
+destinatario.addEventListener("input", () => {
 
-
-    destinatario.value = "Todos los usuarios"
-    listarbuscador.style.display = 'none';
+    if (destinatario.value == "") {
+        destinatario.style.backgroundColor = "#80808012";
+        listarbuscador.style.display = 'none';
+    } else {
+        destinatario.style.backgroundColor = "white";
+    }
 
 })
 
-
-
 reiniciar.addEventListener("click", () => {
 
+    destinatario.disabled = false;
     listarbuscador.style.display = 'none';
 })

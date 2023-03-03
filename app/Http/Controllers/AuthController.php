@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\EnviarCorreo;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -93,82 +94,80 @@ class AuthController extends Controller
     }
 
     public function FuncionMail(Request $req){
-        $co=$req->input('Destinatario');
+        // Validar que el campo de asunto no esta vació
+        $req->validate([
+            'asunto' => 'required',
+        ]);
+      
+        $co=explode(',', $req->input('Destinatario'));
 
-        $sub=$req->input('Asunto');
+        // Verficar que todos los emails que se escriban son correctos 
+        foreach ($co as $email) {
+            $validator = Validator::make(['email' => $email], [
+                'email' => 'email|exists:users'
+            ],
+            [
+                'email.exists' => 'One or more of the emails is not registered'
+            ]
+        );
+
+            $validator->validate();
+        }
+
+        //Recogemos los valores del formulario
+        $sub=$req->input('asunto');
 
         $msg=$req->input('mensaje');
 
+        //Declaramos la variable de factura vacia para enviar la view de correo normal
         $factura="";
-
-        if ((empty($co)) || (empty($sub)) ) {
-            
-            return redirect('/enviarEmail?mal=va');
-        } else {
-            
-            //CORREO PARA TODOS LOS USUARIOS
-        if ($co=="Todos los usuarios") {
-            $correos = User::select('email')->get();
+     
+        //CORREO PARA TODOS LOS USUARIOS
+        if ($req->input('Destinatario')==null) {
+        $correos = User::select('email')->get();
   
-  
- 
-  
-  
-            $datos=array('msg'=>$msg);
-  
-
-   
+        $datos=array('msg'=>$msg);
 
 
-    foreach ($correos as $correo) {
-        $enviar= new EnviarCorreo($datos,$factura);
-        $enviar->sub=$sub;
-        Mail::to($correo)->send($enviar);
-    }
+        foreach ($correos as $correo) {
+            $enviar= new EnviarCorreo($datos,$factura);
+            $enviar->sub=$sub;
+            Mail::to($correo)->send($enviar);
+        }
   
     return redirect('/enviarEmail?email=si');
-    
+    //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
   } else {
-      //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
-      $correos = explode(',', rtrim(trim($co), ','));
-  
-  
-  
+    
+    // RECOGEMOS LOS CORREOS ENVIADOS 
+      $destinatarios=$req->input('Destinatario');
+        
+      $correos = explode(',', rtrim(trim($destinatarios), ','));
+
+    // Almacenamos el input del mesaje para poder imprimirlo por pantalla en la view del correo
       $datos=array('msg'=>$msg);
   
-    
       $formato=true;
-
+ 
       foreach ($correos as $correo) {
        
         if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
             $formato=false;
          }
       }
-
+    // ENVIAMOS LOS CORREOS A LOS USUARIOS ESCRITOS EN LOS CAMPOS
         if ($formato==true) {
-        
       foreach ($correos as $correo) {
        
         $enviar= new EnviarCorreo($datos,$factura);
         $enviar->sub=$sub;
         Mail::to($correo)->send($enviar);
     }  
-    // dd($msg);
     return redirect('/enviarEmail?email=si');
         } else {
             return redirect('/enviarEmail?email=no');
         }
-
-  
-  
-}
- }
-
-
-
-
-
+    }
     }
 
 
@@ -182,7 +181,7 @@ public function listarCorreos(Request $req){
     /* echo $buscador; */
     /* echo $buscador['buscar']; */
     /* dd($request); */
-    $consulta=User::where('email', 'like', '%'.$buscador['buscar'].'%')->get();
+    $consulta=User::where('email', 'like', ''.$buscador['buscar'].'%')->get();
     /* $count = $consulta->count(); */
     return response()->json($consulta);
 

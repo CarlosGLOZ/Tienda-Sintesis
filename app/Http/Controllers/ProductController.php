@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\EnviarCorreo;
 use App\Models\factura;
+use App\Models\Receipt;
+use App\Models\ReceiptItem;
 use App\Models\ShoppingCart;
 use Illuminate\Support\Facades\Mail;
 
@@ -353,5 +355,21 @@ class ProductController extends Controller
         
         // REDIRIGIMOS A LA VIEW DE COMPRA FINALIZADA
         return view('cart.afterPurchase');
+    }
+
+
+    public function test()
+    {
+        // $receipt = ReceiptItem::find(1);
+
+        // $receipt->items()->createMany([
+        //     ['product_id' => 3],
+        //     ['product_id' => 2]
+        // ]);
+        // $result = $receipt;
+
+        // return view('test.test', compact(['result']));
+
+        return redirect()->route('home');
     }
 }

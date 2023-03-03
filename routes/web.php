@@ -57,4 +57,4 @@ Route::post('/cart/store/{product}', [ShoppingCartController::class, 'store'])->
 Route::delete('/cart/destroy/{product}', [ShoppingCartController::class, 'destroy'])->name('cart.destroy');
 
 // Test
-// Route::get('/test', [ProductController::class, 'test'])->name('test');
+Route::get('/test', [ProductController::class, 'test'])->name('test');

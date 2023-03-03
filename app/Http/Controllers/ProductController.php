@@ -358,13 +358,18 @@ class ProductController extends Controller
     }
 
 
-    // public function test()
-    // {
-    //     $receipt = ReceiptItem::with('product', 'receipt')->find(1);
+    public function test()
+    {
+        // $receipt = ReceiptItem::find(1);
 
-    //     // $receipt->items()->create(['product_id' => 3]);
-    //     $result = $receipt;
+        // $receipt->items()->createMany([
+        //     ['product_id' => 3],
+        //     ['product_id' => 2]
+        // ]);
+        // $result = $receipt;
 
-    //     return view('test.test', compact(['result']));
-    // }
+        // return view('test.test', compact(['result']));
+
+        return redirect()->route('home');
+    }
 }

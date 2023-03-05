@@ -25,17 +25,13 @@
 </head>
 <body>
     <div class="region-hero">
-        <div class="img-hero">
-            <img src="{{ asset('../resources/img/circulos.svg') }}" alt="">
+        <div class="texto">
+            <h1>Este no es el mueble que buscas</h1>
+            <p>¡Pero no te preocupes! Aquí hay un montón de muebles más que puedes escoger. ¡Regresa a la página principal para encontarlos!</p>
+            <button class="standard-button">Volver</button>
         </div>
-        <div class="overlay">
-            <div>
-                <h1>La página que estás buscando se ha escapado para ir a almorzar</h1>
-                <p>¡Pero no te preocupes! Aquí hay un montón de deliciosos platos esperándote. ¡Regresa a la página principal y haz tu elección!</p>
-                <img src="{{ asset('../resources/img/404.jpg') }}" alt="">
-            </div>
-            
+        <div class="imagen">
+            <img src="{{ asset('../resources/images/error-404.svg') }}" alt="">
         </div>
-    </div>
 </body>
 </html>

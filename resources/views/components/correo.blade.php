@@ -21,7 +21,7 @@
             <textarea  id="mensaje" name="mensaje" placeholder="Mensaje"></textarea>
 
             <input type="submit" value="ENVIAR CORREO" id="enviar" class="enviar">
-            <input type="reset" id="reiniciar" value="Borrar">
+            <input type="reset" id="reiniciar" value="BORRAR">
         </form>
 
         <div id="listarbuscador" name="listarbuscador" >

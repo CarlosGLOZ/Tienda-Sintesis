@@ -47,7 +47,13 @@
   font-size: 29px;
 }
 .product-img {
-  width: 100px;
-  height: 100px;
   cursor: pointer;
+}
+#toggle-table-button {
+  cursor: pointer;
+  margin-left: 5%;
+  margin-bottom: 20px;
+}
+#product-table {
+  display: none;
 }

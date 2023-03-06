@@ -8,6 +8,9 @@ const editRedirectForm = document.getElementById('edit-redirect-form');
 const productRedirectForm = document.getElementById('product-redirect-form');
 const productImageLabel = document.getElementById('product-image-label');
 const productImageInput = document.getElementById('img');
+const toggleTableButton = document.getElementById('toggle-table-button');
+const toggleTableButtonIcon = document.getElementById('toggle-table-button-icon');
+const productTable = document.getElementById('product-table');
 
 function listar() {
 
@@ -31,7 +34,6 @@ function listar() {
                         box += `<tr >
                             <td>${element.id} </td>
                             <td>${element.name} </td>
-                            <td>${element.description} </td>
                             <td>${element.price} €</td>
                             
                         
@@ -194,6 +196,22 @@ function redirectToProduct(id) {
 
     productRedirectForm.submit();
 }
+
+function toggleTable() {
+    if (toggleTableButton.dataset.state == 'hidden') {
+        productTable.style.display = 'table'
+        toggleTableButton.dataset.state = 'shown'
+        toggleTableButtonIcon.classList.replace('fa-chevron-down', 'fa-chevron-up')
+    } else {
+        productTable.style.display = 'none'
+        toggleTableButton.dataset.state = 'hidden'
+        toggleTableButtonIcon.classList.replace('fa-chevron-up', 'fa-chevron-down')
+    }
+}
+
+toggleTableButton.addEventListener('click', (e) => {
+    toggleTable();
+});
 
 submitFormButton.addEventListener("click", (e) => {
     e.preventDefault();

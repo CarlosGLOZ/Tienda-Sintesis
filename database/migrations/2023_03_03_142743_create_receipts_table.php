@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class FacturaProduct extends Migration
+class CreateReceiptsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class FacturaProduct extends Migration
      */
     public function up()
     {
-        Schema::create('factura_product', function (Blueprint $table) {
+        Schema::create('receipts', function (Blueprint $table) {
             $table->id();
-       
-            $table->foreignId('product_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('factura_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->decimal('subtotal', 10, 2);
             $table->timestamps();
-            // $table->timestamps();
         });
     }
-    
 
     /**
      * Reverse the migrations.
@@ -31,6 +28,6 @@ class FacturaProduct extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('receipts');
     }
 }

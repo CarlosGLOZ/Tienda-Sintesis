@@ -5,6 +5,12 @@ const productForm = document.getElementById('product-form');
 const submitFormButton = document.getElementById('submit-form-button');
 const resetFormButton = document.getElementById('reset-form-button');
 const editRedirectForm = document.getElementById('edit-redirect-form');
+const productRedirectForm = document.getElementById('product-redirect-form');
+const productImageLabel = document.getElementById('product-image-label');
+const productImageInput = document.getElementById('img');
+const toggleTableButton = document.getElementById('toggle-table-button');
+const toggleTableButtonIcon = document.getElementById('toggle-table-button-icon');
+const productTable = document.getElementById('product-table');
 
 function listar() {
 
@@ -26,21 +32,20 @@ function listar() {
                 productos.forEach(element => {
 
                         box += `<tr >
-                    <td>${element.id} </td>
-                    <td>${element.name} </td>
-                    <td>${element.description} </td>
-                    <td>${element.price} €</td>
-                    
-                   
-                    <td> <img style="width: 100px;height:100px" class='product-img' onclick=redirectToEdit(${element.id}) src="../storage/images/products/prod_${element.id}.png?x=${Math.random()}"> </td>
-                  
-                    <td>
-                        <button type='button' class='standard-button' onclick=redirectToEdit(${element.id})>Editar</button>
-                    </td>
-                    <td>
-                        <button type='button' class='standard-button-dark' onclick=destroyProduct('${element.id}')>Eliminar</button>
-                    </td>
-                </tr>`;
+                            <td>${element.id} </td>
+                            <td>${element.name} </td>
+                            <td>${element.price} €</td>
+                            
+                        
+                            <td> <img class='product-img' onclick=redirectToProduct(${element.id}) src="../storage/images/products/prod_${element.id}.png?x=${Math.random()}"> </td>
+                        
+                            <td>
+                                <button type='button' class='standard-button' onclick=redirectToEdit(${element.id})>Editar</button>
+                            </td>
+                            <td>
+                                <button type='button' class='standard-button-dark' onclick=destroyProduct('${element.id}')>Eliminar</button>
+                            </td>
+                        </tr>`;
 
 
 
@@ -61,13 +66,12 @@ function listar() {
 
 function destroyProduct(id) {
     Swal.fire({
-        title: '¿Quiere eliminar este producto?',
+        title: 'Do you want to delete this product?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3894a3',
         cancelButtonColor: '#2f414F',
         confirmButtonText: 'Si',
-        background: 'black',
         color: 'white',
         cancelButtonText: 'Cancelar'
     }).then((result) => {
@@ -128,10 +132,27 @@ function submitProductForm() {
                 background: 'white',
                 showConfirmButton: false,
                 timerProgressBar: true,
-                timer: 3500
+                timer: 3500,
             });
 
-            listar()
+            // Will fail if on edit page
+            try {
+                listar()
+            } catch (error) {
+
+            }
+
+            // Update background image
+
+            // Set background image to default
+            let originalProductImagePath = productImageLabel.style.backgroundImage
+            productImagePath = originalProductImagePath.split('"')[1].split('/');
+            let productImageFileName = productImagePath.pop();
+
+            // // Set background image to original one (with a small timer to let the server update the image?)
+            newProductImagePath = productImagePath.join('/') + '/' + productImageFileName;
+            productImageLabel.style.backgroundImage = "url(" + newProductImagePath + '?x=' + Math.random() + ")";
+
         } else {
             console.error(ajax.status + ': ' + ajax.statusText);
         }
@@ -155,6 +176,8 @@ function resetForm(form) {
             inputs[i].value = '';
         }
     }
+
+    productImageLabel.style.backgroundImage = 'url(' + productImageLabel.dataset.default+')';
 }
 
 function redirectToEdit(id) {
@@ -168,6 +191,24 @@ function redirectToEdit(id) {
     editRedirectForm.submit();
 }
 
+function redirectToProduct(id) {
+    productRedirectForm.action = productRedirectForm.action + '/' + id
+
+    productRedirectForm.submit();
+}
+
+function toggleTable() {
+    if (toggleTableButton.dataset.state == 'hidden') {
+        productTable.style.display = 'table'
+        toggleTableButton.dataset.state = 'shown'
+        toggleTableButtonIcon.classList.replace('fa-chevron-down', 'fa-chevron-up')
+    } else {
+        productTable.style.display = 'none'
+        toggleTableButton.dataset.state = 'hidden'
+        toggleTableButtonIcon.classList.replace('fa-chevron-up', 'fa-chevron-down')
+    }
+}
+
 submitFormButton.addEventListener("click", (e) => {
     e.preventDefault();
     submitProductForm();
@@ -179,8 +220,22 @@ resetFormButton.addEventListener("click", (e) => {
     resetForm(productForm);
 })
 
+productImageInput.addEventListener('input', (e) => {
+    let temporaryProductImage = productImageInput.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', function() {
+        productImageLabel.style.backgroundImage = 'url(' + reader.result + ')';
+    })
+
+    reader.readAsDataURL(temporaryProductImage);
+});
+
 // Try to show table, will fail if on editing page
 try {
+    toggleTableButton.addEventListener('click', (e) => {
+        toggleTable();
+    });
     listar();
 } catch (error) {
 

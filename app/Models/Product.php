@@ -28,9 +28,19 @@ class Product extends Model
         return $this->hasMany(Review::class);
     }
 
-
-    public function facturas()
+    /**
+     * The receipt items a product belongs to
+     */
+    public function receiptItems()
     {
-        return $this->belongsToMany(factura::class);
+        return $this->hasMany(ReceiptItem::class);
+    }
+
+    /**
+     * The receipts a product is associated with
+     */
+    public function receipts()
+    {
+        return $this->belongsToMany(Receipt::class, 'receipt_items');
     }
 }

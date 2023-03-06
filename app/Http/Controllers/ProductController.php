@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\EnviarCorreo;
+use App\Models\factura;
+use App\Models\Receipt;
+use App\Models\ReceiptItem;
+use App\Models\ShoppingCart;
+use Illuminate\Support\Facades\Mail;
 
 class ProductController extends Controller
 {
@@ -50,14 +56,23 @@ class ProductController extends Controller
      */
     public function create()
     {
+        // Validate that user is logged in and an admin
+        if (!Auth::check() || auth()->user()->admin != 1) {
+            return redirect()->route('home');
+        }
+
         return view('product.create');
     }
 
     /**
      * Return the products in a JSON format in order to be used to form a table
      */
-    public function table(Request $request){
-        $filtro=$request->except('_token');
+    public function table(Request $request)
+    {
+        // Validate that user is logged in and an admin
+        if (!Auth::check() || auth()->user()->admin != 1) {
+            return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
+        }
 
         $products=Product::get();
 
@@ -69,6 +84,11 @@ class ProductController extends Controller
      * Destroy an instance of the product and delete its image
      */
     public function destroy(Request $request){
+
+        // Validate that user is logged in and an admin
+        if (!Auth::check() || auth()->user()->admin != 1) {
+            return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
+        }
 
         $id = $request->input('id');
 
@@ -91,8 +111,8 @@ class ProductController extends Controller
     /**
      * Store a new instance of a product in the database and save the given image
      */
-    public function store(Request $request){
-
+    public function store(Request $request)
+    {
         // Validate that user is logged in and an admin
         if (!Auth::check() || auth()->user()->admin != 1) {
             return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
@@ -117,7 +137,7 @@ class ProductController extends Controller
         }
 
 
-        if ($filetype != 'png') {
+        if ($filetype != 'png' && $filetype != 'jpg' && $filetype != 'jpeg') {
             return ['status' => 'NOT OK', 'message' => 'Invalid File Type', 'icon' => 'error'];
         }
 
@@ -139,7 +159,7 @@ class ProductController extends Controller
     {
         // Validate that user is logged in and an admin
         if (!Auth::check() || auth()->user()->admin != 1) {
-            return back()->with(['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error']);
+            return redirect()->route('home')->with(['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error']);
         }
 
         $id = $request->input('id');
@@ -149,8 +169,17 @@ class ProductController extends Controller
         return view('product.create', compact(['product']));
     }
 
-    public function update(Request $request){
+    /**
+     * Update a record in the DB
+     */
+    public function update(Request $request)
+    {
 
+        // Validate that user is logged in and an admin
+        if (!Auth::check() || auth()->user()->admin != 1) {
+            return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
+        }
+        
         // Use Validator class to avoid automatic response by laravel
         $validation = Validator::make(
             $request->all(),
@@ -165,19 +194,18 @@ class ProductController extends Controller
         if ($validation->stopOnFirstFailure()->fails()) {
             return ['status' => 'NOT OK', 'message' => $validation->errors()->first(), 'icon' => 'error'];
         }
-
+        
         $id = $request->input('id');
-
+        
         $product=Product::find($id);
-
+        
         $product_data = $request->except('_token', '_method', 'id', 'img');
-
+        
         try {
             // Change image
             $existingImagePath = public_path("storage/images/products/prod_".$id.".png");
             
             $file=$request->file('img');
-
             
             if ($file != null){            
                 // Delete current image if exists
@@ -185,10 +213,10 @@ class ProductController extends Controller
                 if (file_exists($existingImagePath)) {
                     File::delete($existingImagePath);
                 }
-
+                
                 $file->move(public_path("storage\images\products"), "\prod_".$id.".png");
             } 
-
+            
             $product->update($product_data);
         } catch (\Throwable $th) {
             return ['status' => 'OK', 'message' => $th->getMessage(), 'icon' => 'error'];
@@ -198,7 +226,15 @@ class ProductController extends Controller
     }
 
 
+    /**
+     * Perform a payment for the specified products
+     */
     public function pagar(Request $request){
+
+        // Validate that user is logged in
+        if (!Auth::check()) {
+            return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
+        }
 
         // Validate items sent and add up price
         $precio = 0;
@@ -213,8 +249,9 @@ class ProductController extends Controller
 
             $precio += $product->price;
 
-            // Save products for receipt 
         }
+
+        $idsGETVar = implode(',', $items);
 
         $correo = auth()->user()->email;
 
@@ -235,15 +272,23 @@ class ProductController extends Controller
         $amount->setTotal($precio);
         $amount->setCurrency('EUR');
 
+        // Generar var GET ids
+   
+
+
+        $varGetIds = implode(',',$items);
+       
+    
 
         $transaction = new \PayPal\Api\Transaction();
         $transaction->setAmount($amount);
+        
         //le envio a la pagina informacion del id
         //si se cancela lo llevo a la pagina que quiero
         $redirectUrls = new \PayPal\Api\RedirectUrls();
         $redirectUrls
-        ->setReturnUrl(url("comprado/".$correo))  //Ruta 'OK'
-        ->setCancelUrl(url("/cesta"));        //Ruta 'Cancel'
+        ->setReturnUrl(url(route('product.bought')."?ids=$varGetIds"))  //Ruta 'OK'
+        ->setCancelUrl(url(route('cart.show')));        //Ruta 'Cancel'
 
 
         $payment = new \PayPal\Api\Payment();
@@ -262,8 +307,69 @@ class ProductController extends Controller
         }
     }
 
-    public function comprado($correo, Request $request){
-        // return $correo;
-        dd($request);
+    /**
+     * Return view after purchase for confirmation
+     */
+    public function afterPurchase(Request $request)
+    {
+        // Validate that user is logged in
+        if (!Auth::check()) {
+            return ['status' => 'NOT OK', 'message' => 'Unauthorized access', 'icon' => 'error'];
+        }
+
+        $ids=explode(',',$request->input('ids'));
+
+        //ENVIAMOS UNA VARIABLE FACTURA TRUE PARA INDICAR QUE LA VIEW DEL CORREO QUE ENVIAMOS ES LA DE LA TABLA
+        $factura=true;
+      
+        $correo=auth()->user()->email;
+        
+        //ASUNTO
+        $sub="FACTURA CAHM";
+
+        // ELIMINAR PRODUCTOS DEL CARRITO COMPRADOS
+
+        foreach ($ids as $id) {
+            try {
+                ShoppingCart::where([
+                    'user_id'=>auth()->user()->id,
+                    'product_id'=>$id
+                ])->first()->delete();
+            } catch (\Throwable $th) {
+                continue;
+            }
+        }
+
+        //Mensaje: enviar los productos que se han comprado
+        try {
+            $datos=array('products'=>$ids);
+            
+            //ENVIAMOS CORREO
+            $enviar= new EnviarCorreo($datos,$factura);
+            $enviar->sub=$sub;
+            Mail::to($correo)->send($enviar);
+          
+        } catch (\Throwable $th) {
+            // dd($th);
+        }
+        
+        // REDIRIGIMOS A LA VIEW DE COMPRA FINALIZADA
+        return view('cart.afterPurchase');
+    }
+
+
+    public function test()
+    {
+        // $receipt = ReceiptItem::find(1);
+
+        // $receipt->items()->createMany([
+        //     ['product_id' => 3],
+        //     ['product_id' => 2]
+        // ]);
+        // $result = $receipt;
+
+        // return view('test.test', compact(['result']));
+
+        return redirect()->route('home');
     }
 }

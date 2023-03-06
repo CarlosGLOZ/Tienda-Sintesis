@@ -102,143 +102,115 @@ class AuthController extends Controller
         $factura="";
 
         if ((empty($co)) || (empty($sub)) ) {
-            
             return redirect('/enviarEmail?mal=va');
         } else {
             
             //CORREO PARA TODOS LOS USUARIOS
-        if ($co=="Todos los usuarios") {
-            $correos = User::select('email')->get();
-  
-  
- 
-  
-  
-            $datos=array('msg'=>$msg);
-  
-
-   
-
-
-    foreach ($correos as $correo) {
-        $enviar= new EnviarCorreo($datos,$factura);
-        $enviar->sub=$sub;
-        Mail::to($correo)->send($enviar);
-    }
-  
-    return redirect('/enviarEmail?email=si');
+            if ($co=="Todos los usuarios") {
+                $correos = User::select('email')->get();
     
-  } else {
-      //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
-      $correos = explode(',', rtrim(trim($co), ','));
-  
-  
-  
-      $datos=array('msg'=>$msg);
-  
+                $datos=array('msg'=>$msg);
     
-      $formato=true;
+                foreach ($correos as $correo) {
+                    $enviar= new EnviarCorreo($datos,$factura);
+                    $enviar->sub=$sub;
+                    Mail::to($correo)->send($enviar);
+                }
+            
+                return redirect('/enviarEmail?email=si');
+                
+            } else {
+                //CORREO PARA LOS USUARIOS ESCRITOS A MANO EN EL CAMPO DE DESTINATARIO
+                $correos = explode(',', rtrim(trim($co), ','));
+            
+                $datos=array('msg'=>$msg);
+                
+                $formato=true;
 
-      foreach ($correos as $correo) {
-       
-        if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-            $formato=false;
-         }
-      }
+                foreach ($correos as $correo) {
+                
+                    if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+                        $formato=false;
+                    }
+                }
 
-        if ($formato==true) {
-        
-      foreach ($correos as $correo) {
-       
-        $enviar= new EnviarCorreo($datos,$factura);
-        $enviar->sub=$sub;
-        Mail::to($correo)->send($enviar);
-    }  
-    // dd($msg);
-    return redirect('/enviarEmail?email=si');
-        } else {
-            return redirect('/enviarEmail?email=no');
+                if ($formato==true) {
+                
+                    foreach ($correos as $correo) {
+                    
+                        $enviar= new EnviarCorreo($datos,$factura);
+                        $enviar->sub=$sub;
+                        Mail::to($correo)->send($enviar);
+                    }  
+                    // dd($msg);
+                    return redirect('/enviarEmail?email=si');
+                } else {
+                    return redirect('/enviarEmail?email=no');
+                }
+
+            }
         }
+    }
 
-  
-  
-}
- }
+    public function listarCorreos(Request $req){
 
-
-
-
-
+        $buscador=$req->except('_token');
+        /* $buscador='Mc'; */
+        /* echo $buscador; */
+        /* echo $buscador['buscar']; */
+        /* dd($request); */
+        $consulta=User::where('email', 'like', ''.$buscador['buscar'].'%')->get();
+        /* $count = $consulta->count(); */
+        return response()->json($consulta);
     }
 
 
+    public function pagar($correo,$precio){
+        $apiContext = new \PayPal\Rest\ApiContext(
+            new \PayPal\Auth\OAuthTokenCredential(
+                config('services.paypal.client_id'),     // ClientID
+                config('services.paypal.secret')      // ClientSecret
+            )
+        );
 
 
-
-public function listarCorreos(Request $req){
-
-    $buscador=$req->except('_token');
-    /* $buscador='Mc'; */
-    /* echo $buscador; */
-    /* echo $buscador['buscar']; */
-    /* dd($request); */
-    $consulta=User::where('email', 'like', '%'.$buscador['buscar'].'%')->get();
-    /* $count = $consulta->count(); */
-    return response()->json($consulta);
+        $payer = new \PayPal\Api\Payer();
+        $payer->setPaymentMethod('paypal');
 
 
-
-}
-
-
-public function pagar($correo,$precio){
-    return $correo;
-    return $precio;
-   $apiContext = new \PayPal\Rest\ApiContext(
-        new \PayPal\Auth\OAuthTokenCredential(
-            config('services.paypal.client_id'),     // ClientID
-            config('services.paypal.secret')      // ClientSecret
-        )
-    );
+        $amount = new \PayPal\Api\Amount();
+        //precio a pagar
+        $amount->setTotal($precio);
+        $amount->setCurrency('EUR');
 
 
-    $payer = new \PayPal\Api\Payer();
-    $payer->setPaymentMethod('paypal');
+        $transaction = new \PayPal\Api\Transaction();
+        $transaction->setAmount($amount);
+        //le envioa la pagina informacion del id
+        //si se cancela lo llevo a la pagina que quiero
+        $redirectUrls = new \PayPal\Api\RedirectUrls();
+        $redirectUrls
+        ->setReturnUrl(url("comprado/".$correo))  //Ruta 'OK'
+        ->setCancelUrl(url("/cesta"));        //Ruta 'Cancel'
 
 
-    $amount = new \PayPal\Api\Amount();
-    //precio a pagar
-    $amount->setTotal($precio);
-    $amount->setCurrency('EUR');
+        $payment = new \PayPal\Api\Payment();
+        $payment->setIntent('sale')
+            ->setPayer($payer)
+            ->setTransactions(array($transaction))
+            ->setRedirectUrls($redirectUrls);
+        try {
+            $payment->create($apiContext);
+            //me redirige a la pagina de paypal
+            return redirect()->away( $payment->getApprovalLink());
 
 
-    $transaction = new \PayPal\Api\Transaction();
-    $transaction->setAmount($amount);
-    //le envioa la pagina informacion del id
-    //si se cancela lo llevo a la pagina que quiero
-    $redirectUrls = new \PayPal\Api\RedirectUrls();
-    $redirectUrls
-    ->setReturnUrl(url("comprado/".$correo))  //Ruta 'OK'
-    ->setCancelUrl(url("/cesta"));        //Ruta 'Cancel'
-
-
-    $payment = new \PayPal\Api\Payment();
-    $payment->setIntent('sale')
-        ->setPayer($payer)
-        ->setTransactions(array($transaction))
-        ->setRedirectUrls($redirectUrls);
-    try {
-        $payment->create($apiContext);
-        //me redirige a la pagina de paypal
-        return redirect()->away( $payment->getApprovalLink());
-
-
-    }catch (\PayPal\Exception\PayPalConnectionException $ex) {
-        // This will print the detailed information on the exception.
-        //REALLY HELPFUL FOR DEBUGGING
-        echo $ex->getData();
+        }catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            // This will print the detailed information on the exception.
+            //REALLY HELPFUL FOR DEBUGGING
+            echo $ex->getData();
+        }
     }
-}
 
 }
 

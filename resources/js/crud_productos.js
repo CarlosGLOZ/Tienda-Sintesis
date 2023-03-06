@@ -209,10 +209,6 @@ function toggleTable() {
     }
 }
 
-toggleTableButton.addEventListener('click', (e) => {
-    toggleTable();
-});
-
 submitFormButton.addEventListener("click", (e) => {
     e.preventDefault();
     submitProductForm();
@@ -237,6 +233,9 @@ productImageInput.addEventListener('input', (e) => {
 
 // Try to show table, will fail if on editing page
 try {
+    toggleTableButton.addEventListener('click', (e) => {
+        toggleTable();
+    });
     listar();
 } catch (error) {
 
